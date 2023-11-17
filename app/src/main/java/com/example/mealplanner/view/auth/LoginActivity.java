@@ -1,43 +1,6 @@
+// LoginActivity.java
 package com.example.mealplanner.view.auth;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.mealplanner.R;
-import com.example.mealplanner.controller.UserController;
-import com.example.mealplanner.databinding.ActivityLoginBinding;
-import com.example.mealplanner.repositories.UserRepository;
-import com.example.mealplanner.view.home.HomeActivity;
-
-// LoginActivity.java
-import android.content.Intent;
-
-
-
-// LoginActivity.java
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.mealplanner.controller.UserController;
-import com.example.mealplanner.databinding.ActivityLoginBinding;
-import com.example.mealplanner.repositories.UserRepository;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.GoogleApiClient;
-// LoginActivity.java
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -55,7 +18,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -72,10 +34,20 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         setContentView(binding.getRoot());
 
         // Initialize UserController with UserRepository
-        UserRepository userRepository = new UserRepository();
+        UserRepository userRepository = new UserRepository(getApplicationContext());
+
         userController = new UserController(userRepository);
 
         // Set up Google Sign-In
+        setupGoogleSignIn();
+
+        // Set up UI components and event handlers
+        setupUI();
+
+
+    }
+
+    private void setupGoogleSignIn() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -84,16 +56,17 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+    }
 
-        // Set up UI components and event handlers
+    private void setupUI() {
+        // Set up click listeners for buttons
         binding.buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Normal sign-in logic
+                handleNormalSignIn();
             }
         });
 
-        // Handle Google Sign-In button click
         binding.googleSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,12 +78,31 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         binding.buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Normal registration logic
+                redirectToRegistration();
             }
         });
     }
 
+    private void handleNormalSignIn() {
+        String username = binding.editTextUsername.getText().toString();
+        String password = binding.editTextPassword.getText().toString();
 
+        if (userController.signIn(username, password)) {
+            // Sign-in successful
+            showToast("Sign-in successful");
+
+            // Redirect to HomeActivity
+            redirectToHome();
+        } else {
+            // Sign-in failed
+            showToast("Sign-in failed");
+        }
+    }
+
+    private void redirectToRegistration() {
+        Intent registerIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
+        startActivity(registerIntent);
+    }
 
     private void signInWithGoogle() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
@@ -132,8 +124,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Toast.makeText(this, "Google Sign-In connection failed", Toast.LENGTH_SHORT).show();
     }
 
-
-
     private void handleGoogleSignInResult(GoogleSignInResult result) {
         if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
@@ -154,5 +144,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
-}
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 
+    private void redirectToHome() {
+        Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(homeIntent);
+        finish(); // Optional: finish the LoginActivity to prevent going back
+    }
+}

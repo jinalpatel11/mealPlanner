@@ -1,29 +1,31 @@
 package com.example.mealplanner.repositories;
 
-// UserRepository.java
+import android.content.Context;
+
 import com.example.mealplanner.model.User;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class UserRepository {
-    private static Map<String, User> users = new HashMap<>();
 
-    public void addUser(User user) {
-        users.put(user.getUsername(), user);
+    private DatabaseHelper databaseHelper;
+
+    public UserRepository(Context context) {
+        // Initialize the DatabaseHelper in the constructor
+        databaseHelper = new DatabaseHelper(context);
+    }
+
+    public long addUser(User user) {
+        return databaseHelper.addUser(user);
     }
 
     public User getUser(String username) {
-        return users.get(username);
+        return databaseHelper.getUser(username);
     }
 
     public boolean isUserExist(String username) {
-        return users.containsKey(username);
+        return databaseHelper.isUserExist(username);
     }
 
     public boolean isPasswordCorrect(String username, String password) {
-        User user = getUser(username);
-        return user != null && user.getPassword().equals(password);
+        return databaseHelper.isPasswordCorrect(username, password);
     }
 }
-
