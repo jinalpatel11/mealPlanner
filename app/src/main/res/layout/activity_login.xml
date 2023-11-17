@@ -37,4 +37,11 @@
         android:layout_height="wrap_content"
         android:text="Register"
         android:layout_below="@+id/buttonSignIn"/>
+
+    <!-- activity_login.xml and activity_registration.xml -->
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/googleSignInButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 </RelativeLayout>
