@@ -55,6 +55,8 @@ dependencies {
 //    for ok http
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.1")
 
+//image loading
+    implementation ("com.squareup.picasso:picasso:2.71828") // Use the latest version
 
 
 
