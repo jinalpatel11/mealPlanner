@@ -41,5 +41,21 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+    //for google auth
     implementation ("com.google.android.gms:play-services-auth:20.7.0")
+
+    //for retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.3.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.3.0")
+    implementation ("com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0")
+
+//    for api
+    implementation ("com.google.code.gson:gson:2.8.6")
+
+//    for ok http
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.1")
+
+
+
+
 }

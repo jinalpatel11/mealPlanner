@@ -34,5 +34,15 @@
         android:layout_marginTop="16dp"
         android:layout_centerHorizontal="true"/>
 
+    <!-- MealList Button -->
+    <Button
+        android:id="@+id/mealListButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="mealList"
+        android:layout_below="@+id/logoutButton"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"/>
+
     <!-- Add other UI elements as needed -->
 </RelativeLayout>

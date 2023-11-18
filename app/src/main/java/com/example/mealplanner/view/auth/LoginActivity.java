@@ -1,4 +1,3 @@
-// LoginActivity.java
 package com.example.mealplanner.view.auth;
 
 import android.content.Intent;

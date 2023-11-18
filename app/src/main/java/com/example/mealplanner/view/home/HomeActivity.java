@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mealplanner.databinding.ActivityHomeBinding;
 import com.example.mealplanner.view.auth.LoginActivity;
+import com.example.mealplanner.view.meal.MealListActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -46,6 +47,16 @@ public class HomeActivity extends AppCompatActivity {
                 navigateToLogin(); // Navigate to the LoginActivity and finish the current activity
             }
         });
+
+        binding.mealListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                navigateToMealList(); // Navigate to the MealListActivity
+            }
+        });
+
+
     }
 
     private void signOut() {
@@ -61,5 +72,11 @@ public class HomeActivity extends AppCompatActivity {
         Intent loginIntent = new Intent(HomeActivity.this, LoginActivity.class);
         startActivity(loginIntent);
         finish();
+    }
+    private void navigateToMealList() {
+        // Navigate to the MealListActivity and finish the current activity
+        Intent loginIntent = new Intent(HomeActivity.this, MealListActivity.class);
+        startActivity(loginIntent);
+
     }
 }
