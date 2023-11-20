@@ -1,9 +1,13 @@
 <!-- res/layout/recipe_card_item.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?android:attr/selectableItemBackground">
 
     <ImageView
         android:id="@+id/recipeImageView"
@@ -19,6 +23,5 @@
         android:layout_marginTop="8dp"
         android:textSize="18sp"
         android:textStyle="bold" />
-
 
 </LinearLayout>

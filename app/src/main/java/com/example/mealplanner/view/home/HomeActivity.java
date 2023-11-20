@@ -3,14 +3,13 @@ package com.example.mealplanner.view.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealplanner.R;
 import com.example.mealplanner.databinding.ActivityHomeBinding;
-import com.example.mealplanner.model.Recipe;
+import com.example.mealplanner.model.meal.Recipe;
 import com.example.mealplanner.model.RecipeItem;
 import com.example.mealplanner.network.ApiClient;
 import com.example.mealplanner.network.SpoonacularApiService;
@@ -48,23 +47,9 @@ public class HomeActivity extends AppCompatActivity {
         setupGoogleSignIn();
 
         // Set up click listener for Logout Button using View Binding
-        binding.logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Handle logout action
-                signOut(); // Sign out from Google Sign-In
-                navigateToLogin(); // Navigate to the LoginActivity and finish the current activity
-            }
-        });
+        setupLogoutButton();
 
-        binding.mealListButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                navigateToMealList(); // Navigate to the MealListActivity
-            }
-        });
-
+        setupMealListButton();
 
 
         // Recipes RecyclerView
@@ -110,8 +95,6 @@ public class HomeActivity extends AppCompatActivity {
 
         recipeCardsRecyclerView.setLayoutManager(cardLayoutManager);
 
-        // Assuming you have a List<Recipe> recipeList from API response
-
         // Call the API to get recipes by ingredients
         String apiKey = "dcdedec37a6142a4a44bac515bd77f51"; // Replace with your actual API key
         String ingredients = "beverage";
@@ -153,10 +136,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
-
 
     private void setupUserInfo() {
         Intent intent = getIntent();
@@ -213,5 +193,17 @@ public class HomeActivity extends AppCompatActivity {
         googleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
+    private void setupLogoutButton() {
+        binding.logoutButton.setOnClickListener(view -> {
+            // Handle logout action
+            signOut();// Sign out from Google Sign-In
+            navigateToLogin(); // Navigate to the LoginActivity and finish the current activity
+        });
+
+    }
+
+    private void setupMealListButton() {
+        binding.mealListButton.setOnClickListener(view -> navigateToMealList());
+    }
 
 }

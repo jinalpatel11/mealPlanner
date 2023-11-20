@@ -2,9 +2,10 @@ package com.example.mealplanner.model;
 
 // Ingredient.java
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Ingredient {
+public class Ingredient implements Serializable {
     private int id;
     private double amount;
     private String unit;
@@ -40,6 +41,62 @@ public class Ingredient {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getUnitLong() {
+        return unitLong;
+    }
+
+    public void setUnitLong(String unitLong) {
+        this.unitLong = unitLong;
+    }
+
+    public String getUnitShort() {
+        return unitShort;
+    }
+
+    public void setUnitShort(String unitShort) {
+        this.unitShort = unitShort;
+    }
+
+    public String getAisle() {
+        return aisle;
+    }
+
+    public void setAisle(String aisle) {
+        this.aisle = aisle;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
 

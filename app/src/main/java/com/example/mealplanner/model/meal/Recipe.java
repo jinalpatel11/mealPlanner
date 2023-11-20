@@ -1,10 +1,13 @@
-package com.example.mealplanner.model;
+package com.example.mealplanner.model.meal;
 
+import com.example.mealplanner.model.Ingredient;
+
+import java.io.Serializable;
 import java.util.List;
 // Recipe.java
 
 
-public class Recipe {
+public class Recipe  implements Serializable {
     private int id;
     private String title;
     private String image;
@@ -69,5 +72,13 @@ public class Recipe {
 
     public void setMissedIngredients(List<Ingredient> missedIngredients) {
         this.missedIngredients = missedIngredients;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

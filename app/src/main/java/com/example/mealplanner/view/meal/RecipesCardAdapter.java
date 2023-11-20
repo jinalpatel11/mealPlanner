@@ -2,26 +2,23 @@ package com.example.mealplanner.view.meal;
 // RecipesCardAdapter.java
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.mealplanner.R;
-import com.example.mealplanner.databinding.ItemMealBinding;
+
 import com.example.mealplanner.databinding.ItemRecipeCardBinding;
-import com.example.mealplanner.model.Ingredient;
-import com.example.mealplanner.model.Recipe;
+import com.example.mealplanner.model.meal.Recipe;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class RecipesCardAdapter extends RecyclerView.Adapter<RecipesCardAdapter.RecipeViewHolder> {
 
-    private Context context;
+    private static Context context;
     private List<Recipe> recipes;
 
     public RecipesCardAdapter(Context context, List<Recipe> recipes) {
@@ -64,13 +61,25 @@ public class RecipesCardAdapter extends RecyclerView.Adapter<RecipesCardAdapter.
 
 
 
-        void bind(Recipe recipe)
-        {
-            binding.recipeTitleTextView.setText(recipe.getTitle());
+        // Inside the RecipeViewHolder class in RecipesCardAdapter
+        void bind(final Recipe recipe) {
+             binding.recipeTitleTextView.setText(recipe.getTitle());
             // Load the image using Picasso (replace 'imageUrl' with the actual field in your Product model)
             Picasso.get().load(recipe.getImage()).into(binding.recipeImageView);
 
+            // Set click listener for the recipe card
+            binding.getRoot().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Handle the click event, e.g., launch RecipeDetails activity/fragment
+                    // You may want to pass the recipe details to the RecipeDetails view
+                    Intent intent = new Intent(context, RecipeDetailsActivity.class);
+                    intent.putExtra("recipe_id", recipe.getId()); // Pass any necessary data
+                    context.startActivity(intent);
+                }
+            });
         }
+
     }
 }
 
