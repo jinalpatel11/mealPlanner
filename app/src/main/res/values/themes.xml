@@ -2,8 +2,37 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.MealPlanner" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/primary</item>
     </style>
 
     <style name="Theme.MealPlanner" parent="Base.Theme.MealPlanner" />
+
+    <style name="Heading1"  >
+        <item name="android:textSize">16dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Heading2"  >
+        <item name="android:textSize">14dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Heading3"  >
+        <item name="android:textSize">12dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Paragraph"  >
+        <item name="android:textSize">10dp</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <!-- Other theme attributes -->
+
+        <item name="android:windowContentOverlay">@null</item>
+
+        <!-- AppBarOverlay attribute -->
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+
 </resources>

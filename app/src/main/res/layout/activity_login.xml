@@ -3,15 +3,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
     tools:context=".view.auth.LoginActivity">
+
+    <ImageView
+        android:id="@+id/mealPlannerLogo"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:src="@drawable/noun_meal_749510"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:id="@+id/textWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/mealPlannerLogo"
+        android:layout_centerHorizontal="true"
+
+        />
+
+    <TextView
+        android:id="@+id/textPleaseSign"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please sign in below to get started"
+        android:textSize="20dp"
+        android:layout_below="@+id/textWelcome"
+        />
 
     <EditText
         android:id="@+id/editTextUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Username"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:layout_below="@+id/textPleaseSign"/>
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -22,27 +54,73 @@
         android:layout_below="@+id/editTextUsername"
         android:layout_marginBottom="16dp"/>
 
+    <TextView
+        android:id="@+id/forgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot your password?"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/editTextPassword"
+        android:textColor="@color/primary"
+        />
+
     <Button
         android:id="@+id/buttonSignIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign In"
-        android:layout_below="@+id/editTextPassword"
-        android:layout_marginBottom="16dp"/>
+        android:text="Continue"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_below="@+id/forgotPassword"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_button_background" />
 
+
+    <TextView
+        android:id="@+id/textOR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="---------OR---------"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/buttonSignIn"
+        />
+
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/googleSignInButton"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/textOR"
+
+            android:layout_height="wrap_content"/>
+
+
+
+    <TextView
+        android:id="@+id/dontHaveAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Don't have an account ?"
+        android:layout_below="@+id/googleSignInButton"
+        android:textSize="14dp"
+        />
     <!-- New Button for Registration -->
-    <Button
+    <TextView
         android:id="@+id/buttonRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register"
-        android:layout_below="@+id/buttonSignIn"/>
+        android:text="Sign up here"
+        android:textColor="@color/primary"
+        android:layout_below="@+id/dontHaveAccount"
+        android:textSize="14dp"
+        android:textStyle="bold"/>
 
-    <!-- activity_login.xml and activity_registration.xml -->
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/googleSignInButton"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonRegister"/>
-
+        android:text="privacy policy"
+        android:layout_below="@+id/buttonRegister"
+        android:layout_centerHorizontal="true"
+        android:textSize="12dp"
+        />
 </RelativeLayout>

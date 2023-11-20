@@ -1,4 +1,4 @@
-<!-- activity_home.xml -->
+<!-- activity_main.xml -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,43 +6,114 @@
     android:padding="16dp"
     tools:context=".view.home.HomeActivity">
 
-    <TextView
-        android:id="@+id/welcomeTextView"
-        android:layout_width="wrap_content"
+    <!-- Header -->
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:background="@color/basicBackgroundColor"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome!"
-        android:textSize="20sp"
-        android:layout_centerInParent="true"/>
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp">
 
-    <TextView
-        android:id="@+id/emailTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="18sp"
-        android:layout_below="@+id/welcomeTextView"
-        android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true"/>
+        <!-- Email TextView -->
+        <TextView
+            android:id="@+id/emailTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=""
+            android:textSize="18sp"/>
 
-    <!-- Logout Button -->
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        android:layout_below="@+id/emailTextView"
-        android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true"/>
+        <!-- Logout Button -->
+        <Button
+            android:id="@+id/logoutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:layout_marginLeft="16dp"/>
 
-    <!-- MealList Button -->
+    </LinearLayout>
+
+    <!-- Scrolling Content Area -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerLayout"
+        android:layout_above="@+id/mealListButton">
+
+        <!-- Your Scrollable Content Goes Here -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/recipesTitleLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="16dp"
+            android:background="@color/basicBackgroundColor">
+
+            <TextView
+                style="@style/Heading1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Recipes"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" style="@style/Heading3"
+                android:text="VIEW ALL"
+                android:padding="16dp"/>
+
+        </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+
+                android:id="@+id/recipesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recipesTitleLayout"
+                android:layout_marginTop="16dp"
+                android:background="@color/basicBackgroundColor"/>
+            <!-- Content Goes Here -->
+
+            <!-- Add more views as needed -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Newest Premium Recipes"/>
+
+            <!-- RecyclerView for Recipe Cards -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recipeCardsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@color/basicBackgroundColor"/>
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+    <!-- Footer -->
+
+
     <Button
         android:id="@+id/mealListButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="mealList"
-        android:layout_below="@+id/logoutButton"
         android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true"/>
-
-    <!-- Add other UI elements as needed -->
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"/>
 </RelativeLayout>
