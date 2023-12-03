@@ -7,20 +7,29 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.view.Gravity;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.mealplanner.R;
 import com.example.mealplanner.databinding.ActivityRecipeDetailsBinding;
 import com.example.mealplanner.model.meal.details.AnalyzedInstruction;
 import com.example.mealplanner.model.meal.details.ExtendedIngredient;
 import com.example.mealplanner.model.meal.RecipeDetails;
+import com.example.mealplanner.model.meal.details.Nutrient;
+import com.example.mealplanner.model.meal.details.Nutrition;
 import com.example.mealplanner.model.meal.details.Step;
 import com.example.mealplanner.network.ApiClient;
 import com.example.mealplanner.network.SpoonacularApiService;
 import com.squareup.picasso.Picasso;
 
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,7 +65,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         String apiKey = "dcdedec37a6142a4a44bac515bd77f51"; // Replace with your Spoonacular API key
 
         // Example: Fetch recipe details by ID
-        Call<RecipeDetails> call = apiService.getRecipeInformation(recipeId, apiKey);
+        Call<RecipeDetails> call = apiService.getRecipeInformation(recipeId, apiKey , true);
         call.enqueue(new Callback<RecipeDetails>() {
             @Override
             public void onResponse(Call<RecipeDetails> call, Response<RecipeDetails> response) {
@@ -103,6 +112,49 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             }
         }
         binding.instructionsTextView.setText(instructions.toString());
+
+
+        // Assuming you have a TableLayout in your XML layout file with the id "nutritionTable"
+        // Assuming you have a TableLayout in your XML layout file with the ids "mainNutrientsTable" and "supplementalNutrientsTable"
+        // Use binding to access views
+        TableLayout mainNutrientsTable = binding.mainNutrientsTable;
+        TableLayout supplementalNutrientsTable = binding.supplementalNutrientsTable;
+
+        // Create header row for main nutrients table
+        TableRow mainHeaderRow = new TableRow(this);
+        mainHeaderRow.addView(createTextView("Nutrient", true));
+        mainHeaderRow.addView(createTextView("Amount", true));
+        mainHeaderRow.addView(createTextView("Percent of Daily Needs", true));
+        mainNutrientsTable.addView(mainHeaderRow);
+
+        // Create header row for supplemental nutrients table
+        TableRow supplementalHeaderRow = new TableRow(this);
+        supplementalHeaderRow.addView(createTextView("Nutrient", true));
+        supplementalHeaderRow.addView(createTextView("Amount", true));
+        supplementalNutrientsTable.addView(supplementalHeaderRow);
+
+        // Separate nutrients into main and supplemental categories
+        Nutrition nutrition = recipeDetails.getNutrition();
+        List<Nutrient> nutrientList = nutrition.getNutrients();
+        for (Nutrient nutrient : nutrientList) {
+            TableRow dataRow;
+
+            // Determine the table to add the nutrient based on its category
+            if (isMainNutrient(nutrient.getName())) {
+                dataRow = new TableRow(this);
+                dataRow.addView(createTextView(nutrient.getName(), false));
+                dataRow.addView(createTextView(String.valueOf(nutrient.getAmount()), false));
+                dataRow.addView(createTextView(String.valueOf(nutrient.getPercentOfDailyNeeds()), false));
+                mainNutrientsTable.addView(dataRow);
+            } else {
+                dataRow = new TableRow(this);
+                dataRow.addView(createTextView(nutrient.getName(), false));
+                dataRow.addView(createTextView(String.valueOf(nutrient.getAmount()), false));
+                supplementalNutrientsTable.addView(dataRow);
+            }
+        }
+
+
     }
 
     // Add a method to load images using Picasso or Glide
@@ -114,4 +166,58 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         // Glide.with(this).load(imageUrl).into(binding.recipeImageView);
     }
 
+    private TextView createTextView(String nutrientName,  boolean isHeader) {
+        TextView textView = new TextView(this);
+
+        textView.setGravity(Gravity.CENTER);
+        textView.setPadding(8, 8, 8, 8);
+
+        if (isHeader) {
+            textView.setBackgroundResource(R.drawable.cell_header_background);
+            textView.setTextColor(getResources().getColor(android.R.color.white));
+        } else {
+            // Set different colors based on nutrient name
+            int textColor = getColorForNutrient(nutrientName);
+            textView.setTextColor(textColor);
+
+            textView.setBackgroundResource(R.drawable.cell_background);
+        }
+
+        return textView;
+    }
+
+    private int getColorForNutrient(String nutrientName) {
+        int colorResId = R.color.defaultColor; // Default color if no specific condition is met
+
+        // Apply different colors based on nutrient name
+        if ("Calories".equals(nutrientName)) {
+            colorResId = R.color.caloriesColor;
+        } else if ("Protein".equals(nutrientName)) {
+            colorResId = R.color.proteinColor;
+        }
+        // Add more conditions for other nutrients as needed
+
+        return getResources().getColor(colorResId);
+    }
+
+    private boolean isMainNutrient(String nutrientName) {
+        // Define the main nutrient names
+        Set<String> mainNutrientNames = new HashSet<>(Arrays.asList(
+                "Calories",
+                "Fat",
+                "Trans Fat",
+                "Mono Unsaturated Fat",
+                "Poly Unsaturated Fat",
+                "Protein",
+                "Cholesterol",
+                "Carbohydrates",
+                "Net Carbohydrates",
+                "Alcohol",
+                "Fiber",
+                "Sugar"
+                // Add more main nutrient names as needed
+        ));
+
+        return mainNutrientNames.contains(nutrientName);
+    }
 }

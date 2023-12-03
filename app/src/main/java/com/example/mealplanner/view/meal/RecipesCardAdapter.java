@@ -56,7 +56,6 @@ public class RecipesCardAdapter extends RecyclerView.Adapter<RecipesCardAdapter.
          RecipeViewHolder(@NonNull ItemRecipeCardBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-
          }
 
 

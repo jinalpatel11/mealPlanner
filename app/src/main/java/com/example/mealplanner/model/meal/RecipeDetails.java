@@ -2,6 +2,7 @@ package com.example.mealplanner.model.meal;
 
 import com.example.mealplanner.model.meal.details.AnalyzedInstruction;
 import com.example.mealplanner.model.meal.details.ExtendedIngredient;
+import com.example.mealplanner.model.meal.details.Nutrition;
 import com.example.mealplanner.model.meal.details.WinePairing;
 import com.google.gson.annotations.SerializedName;
 
@@ -88,6 +89,9 @@ public class RecipeDetails {
 
     @SerializedName("imageType")
     private String imageType;
+
+    @SerializedName("nutrition")
+    private Nutrition nutrition;
 
     @SerializedName("summary")
     private String summary;
@@ -277,5 +281,13 @@ public class RecipeDetails {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Nutrition getNutrition() {
+        return nutrition;
+    }
+
+    public void setNutrition(Nutrition nutrition) {
+        this.nutrition = nutrition;
     }
 }
