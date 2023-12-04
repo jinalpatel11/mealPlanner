@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -42,7 +43,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+Log.d("Jinal Activity","Start");
         // Inflate the layout using view binding
         binding = ActivityRecipeDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -72,6 +73,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null ) {
                     RecipeDetails recipeDetails = response.body();
                     // Update UI with the fetched recipe details
+                    Log.e("RecipeDetailsActivity", "Successfully");
+
                     updateUI(recipeDetails);
                 } else {
                     Log.e("RecipeDetailsActivity", "Error fetching recipe details");
@@ -145,8 +148,10 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 dataRow.addView(createTextView(nutrient.getName(), false));
                 dataRow.addView(createTextView(String.valueOf(nutrient.getAmount()), false));
                 dataRow.addView(createTextView(String.valueOf(nutrient.getPercentOfDailyNeeds()), false));
+                Log.d("Jinal Main nutrient",nutrient.getName());
                 mainNutrientsTable.addView(dataRow);
             } else {
+                Log.d("Jinal Not Main nutrient",nutrient.getName());
                 dataRow = new TableRow(this);
                 dataRow.addView(createTextView(nutrient.getName(), false));
                 dataRow.addView(createTextView(String.valueOf(nutrient.getAmount()), false));
@@ -166,11 +171,22 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         // Glide.with(this).load(imageUrl).into(binding.recipeImageView);
     }
 
-    private TextView createTextView(String nutrientName,  boolean isHeader) {
+    private TextView createTextView(String nutrientName, boolean isHeader) {
         TextView textView = new TextView(this);
+
+        // Set layout parameters
+        TableRow.LayoutParams params = new TableRow.LayoutParams(
+                TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT
+        );
+        textView.setLayoutParams(params);
+
+        // Set visibility
+        textView.setVisibility(View.VISIBLE);
 
         textView.setGravity(Gravity.CENTER);
         textView.setPadding(8, 8, 8, 8);
+        Log.d("Jinal", "Creating TextView for: " + nutrientName + ", isHeader: " + isHeader);
 
         if (isHeader) {
             textView.setBackgroundResource(R.drawable.cell_header_background);
@@ -183,21 +199,26 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             textView.setBackgroundResource(R.drawable.cell_background);
         }
 
+        textView.setText(nutrientName); // Set the nutrient name as text
+
         return textView;
     }
 
     private int getColorForNutrient(String nutrientName) {
-        int colorResId = R.color.defaultColor; // Default color if no specific condition is met
+        int defaultColorResId = R.color.black;
 
-        // Apply different colors based on nutrient name
+        // Add conditions based on nutrient name
         if ("Calories".equals(nutrientName)) {
-            colorResId = R.color.caloriesColor;
+            Log.d("ColorDebug", "Selected color for Calories");
+            return getResources().getColor(R.color.caloriesColor); // Set color dynamically
         } else if ("Protein".equals(nutrientName)) {
-            colorResId = R.color.proteinColor;
+            Log.d("ColorDebug", "Selected color for Protein");
+            return getResources().getColor(R.color.proteinColor); // Set color dynamically
         }
-        // Add more conditions for other nutrients as needed
 
-        return getResources().getColor(colorResId);
+        // Default color if no specific condition is met
+        Log.d("ColorDebug", "Selected default color");
+        return getResources().getColor(defaultColorResId);
     }
 
     private boolean isMainNutrient(String nutrientName) {
