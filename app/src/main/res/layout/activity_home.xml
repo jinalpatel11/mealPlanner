@@ -66,6 +66,7 @@
                 android:textSize="18sp"/>
 
             <TextView
+                android:id="@+id/ViewAllText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" style="@style/Heading3"
                 android:text="VIEW ALL"

@@ -2,6 +2,7 @@ package com.example.mealplanner.view.meal;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,7 +44,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-Log.d("Jinal Activity","Start");
+        Log.d(" Activity","Start");
         // Inflate the layout using view binding
         binding = ActivityRecipeDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -96,7 +97,12 @@ Log.d("Jinal Activity","Start");
         // Assuming you have a method loadImage for loading images
         loadImage(recipeDetails.getImage());
 
-        binding.recipeSummaryTextView.setText(recipeDetails.getSummary());
+        // Set the summary text with HTML formatting
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            binding.recipeSummaryTextView.setText(Html.fromHtml(recipeDetails.getSummary(), Html.FROM_HTML_MODE_LEGACY));
+        } else {
+            binding.recipeSummaryTextView.setText(Html.fromHtml(recipeDetails.getSummary()));
+        }
 
         // Set Ingredients
         List<ExtendedIngredient> ingredients = recipeDetails.getExtendedIngredients();
@@ -114,6 +120,7 @@ Log.d("Jinal Activity","Start");
                 instructions.append(String.format(Locale.getDefault(), "%d. %s\n", step.getNumber(), step.getStep()));
             }
         }
+
         binding.instructionsTextView.setText(instructions.toString());
 
 

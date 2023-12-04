@@ -3,6 +3,9 @@ package com.example.mealplanner.view.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +20,8 @@ import com.example.mealplanner.view.auth.LoginActivity;
 import com.example.mealplanner.view.meal.MealListActivity;
 import com.example.mealplanner.view.meal.RecipesAdapter;
 import com.example.mealplanner.view.meal.RecipesCardAdapter;
+
+import com.example.mealplanner.view.meal.ViewAllRecipesActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -51,6 +56,8 @@ public class HomeActivity extends AppCompatActivity {
 
         setupMealListButton();
 
+
+        setupViweAllButton();
 
         // Recipes RecyclerView
         RecyclerView recipesRecyclerView = findViewById(R.id.recipesRecyclerView);
@@ -204,6 +211,22 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setupMealListButton() {
         binding.mealListButton.setOnClickListener(view -> navigateToMealList());
+    }
+
+    private void setupViweAllButton() {
+        // Inside your onCreate method in HomeActivity.java
+        TextView viewAllTextView = findViewById(R.id.ViewAllText);
+
+        viewAllTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle the click event, navigate to ViewAllActivity
+                Intent viewAllIntent = new Intent(HomeActivity.this, ViewAllRecipesActivity.class);
+                startActivity(viewAllIntent);
+            }
+
+        });
+
     }
 
 }

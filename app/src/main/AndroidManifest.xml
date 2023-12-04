@@ -40,6 +40,10 @@
             android:name=".view.meal.RecipeDetailsActivity"
             android:label="@string/app_name" />
 
+        <activity
+            android:name=".view.meal.ViewAllRecipesActivity"
+            android:label="@string/app_name" />
+
     </application>
 
 </manifest>
