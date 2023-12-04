@@ -41,7 +41,7 @@ public class RecipesCardAdapter extends RecyclerView.Adapter<RecipesCardAdapter.
         holder.bind(recipe);
         Log.d("RecipesCardAdapter",recipe.getTitle());
 
-      }
+    }
 
     @Override
     public int getItemCount() {
@@ -53,17 +53,16 @@ public class RecipesCardAdapter extends RecyclerView.Adapter<RecipesCardAdapter.
         private final ItemRecipeCardBinding binding;
         // Declare your views here
 
-         RecipeViewHolder(@NonNull ItemRecipeCardBinding binding) {
+        RecipeViewHolder(@NonNull ItemRecipeCardBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-
-         }
+        }
 
 
 
         // Inside the RecipeViewHolder class in RecipesCardAdapter
         void bind(final Recipe recipe) {
-             binding.recipeTitleTextView.setText(recipe.getTitle());
+            binding.recipeTitleTextView.setText(recipe.getTitle());
             // Load the image using Picasso (replace 'imageUrl' with the actual field in your Product model)
             Picasso.get().load(recipe.getImage()).into(binding.recipeImageView);
 

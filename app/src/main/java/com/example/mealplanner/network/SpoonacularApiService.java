@@ -30,7 +30,8 @@ public interface SpoonacularApiService {
     @GET("/recipes/{recipeId}/information")
     Call<RecipeDetails> getRecipeInformation(
             @Path("recipeId") int recipeId,
-            @Query("apiKey") String apiKey
+            @Query("apiKey") String apiKey,
+            @Query("includeNutrition") Boolean includeNutrition
     );
 }
 

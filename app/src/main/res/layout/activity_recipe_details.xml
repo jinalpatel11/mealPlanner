@@ -69,5 +69,28 @@
             android:text="1. Marinate pork steak for 24 hours in meat marinate mix and Italian dressing...\n2. Remove from marinate and brown on the grill for about 20 minutes..."
             android:textSize="16sp" />
 
+        <!-- Nutrition Table Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Nutritional Information"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TableLayout
+            android:id="@+id/mainNutrientsTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*">
+            <!-- Table rows will be dynamically added here -->
+        </TableLayout>
+        <TableLayout
+            android:id="@+id/supplementalNutrientsTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*">
+            <!-- Table rows will be dynamically added here -->
+        </TableLayout>
     </LinearLayout>
 </ScrollView>

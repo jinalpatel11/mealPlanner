@@ -282,4 +282,12 @@ public class RecipeDetails {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public Nutrition getNutrition() {
+        return nutrition;
+    }
+
+    public void setNutrition(Nutrition nutrition) {
+        this.nutrition = nutrition;
+    }
 }
