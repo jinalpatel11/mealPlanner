@@ -54,29 +54,12 @@ public class HomeActivity extends AppCompatActivity {
         // Set up click listener for Logout Button using View Binding
         setupLogoutButton();
 
-        setupMealListButton();
-
-
         setupViweAllButton();
 
         // Recipes RecyclerView
         RecyclerView recipesRecyclerView = findViewById(R.id.recipesRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recipesRecyclerView.setLayoutManager(layoutManager);
-
-        // Create a list of static recipe titles
-        List<String> recipeTitles = new ArrayList<>();
-        recipeTitles.add("Quick & Easy");
-        recipeTitles.add("Main Course");
-        recipeTitles.add("Lunch");
-        recipeTitles.add("Snack");
-        recipeTitles.add("Beverage");
-        recipeTitles.add("Salad");
-        recipeTitles.add("Dessert");
-        recipeTitles.add("Side Course");
-        recipeTitles.add("Vegetarian");
-        recipeTitles.add("Gluten Free");
-        recipeTitles.add("Fasting Friendly");
 
         // In your activity or fragment
         List<RecipeItem> recipeItems = new ArrayList<>();
@@ -96,52 +79,28 @@ public class HomeActivity extends AppCompatActivity {
         apiService = ApiClient.getClient().create(SpoonacularApiService.class);
 
 
-        // RecipeCard RecyclerView
-        RecyclerView recipeCardsRecyclerView = findViewById(R.id.recipeCardsRecyclerView);
-        LinearLayoutManager cardLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        // RecipeCard RecyclerView1
+        RecyclerView recipeCardsRecyclerView1 = findViewById(R.id.recipeCardsRecyclerView1);
+        LinearLayoutManager cardLayoutManager1 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
-        recipeCardsRecyclerView.setLayoutManager(cardLayoutManager);
+        recipeCardsRecyclerView1.setLayoutManager(cardLayoutManager1);
+        fetchRecipesByIngredients(recipeCardsRecyclerView1 , "lunch");
 
-        // Call the API to get recipes by ingredients
-        String apiKey = "dcdedec37a6142a4a44bac515bd77f51"; // Replace with your actual API key
-        String ingredients = "beverage";
-        int number = 2;
+        // RecipeCard RecyclerView2
+        RecyclerView recipeCardsRecyclerView2 = findViewById(R.id.recipeCardsRecyclerView2);
+        LinearLayoutManager cardLayoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
-        SpoonacularApiService apiService = ApiClient.getClient().create(SpoonacularApiService.class);
-        Call<List<Recipe>> call = apiService.getRecipesByIngredients(apiKey, ingredients, number);
+        recipeCardsRecyclerView2.setLayoutManager(cardLayoutManager2);
+        fetchRecipesByIngredients(recipeCardsRecyclerView2 , "chocolate");
 
-        call.enqueue(new Callback<List<Recipe>>() {
-            @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                int statusCode = response.code();
-                Log.d("HomeActivity", "Response Code: " + statusCode);
+        // RecipeCard RecyclerView3
+        RecyclerView recipeCardsRecyclerView3 = findViewById(R.id.recipeCardsRecyclerView3);
+        LinearLayoutManager cardLayoutManager3 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
-                if (response.isSuccessful()) {
-                    List<Recipe> recipes = response.body();
-                    // Log the response body
-                    Log.d("HomeActivity", "Response Body: " + recipes);
+        recipeCardsRecyclerView3.setLayoutManager(cardLayoutManager3);
+        fetchRecipesByIngredients(recipeCardsRecyclerView3 , "snack");
 
-                    if (recipes != null) {
-                        // Process the recipes
-                        RecipesCardAdapter recipesCardAdapter = new RecipesCardAdapter(HomeActivity.this, recipes);
-                        recipeCardsRecyclerView.setAdapter(recipesCardAdapter);
-                    } else {
-                        // Handle null response
-                        Log.e("HomeActivity", "Null response body");
-                    }
 
-                } else {
-                    // Handle API error based on the status code
-                    Log.e("HomeActivity", "API error: " + response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                // Handle API call failure
-                Log.e("HomeActivity", "API call failed: " + t.getMessage());
-            }
-        });
 
     }
 
@@ -209,9 +168,6 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    private void setupMealListButton() {
-        binding.mealListButton.setOnClickListener(view -> navigateToMealList());
-    }
 
     private void setupViweAllButton() {
         // Inside your onCreate method in HomeActivity.java
@@ -228,5 +184,54 @@ public class HomeActivity extends AppCompatActivity {
         });
 
     }
+
+    private void fetchRecipesByIngredients(RecyclerView recipeCardsRecyclerView1 ,String ingredients) {
+        // Call the API to get recipes by ingredients
+        String apiKey = "dcdedec37a6142a4a44bac515bd77f51"; // Replace with your actual API key
+
+        int number = 10;
+
+        Call<List<Recipe>> call = apiService.getRecipesByIngredients(apiKey, ingredients, number);
+
+        call.enqueue(new Callback<List<Recipe>>() {
+            @Override
+            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+                int statusCode = response.code();
+                Log.d("HomeActivityAPI", "Response Code: " + statusCode);
+
+                if (response.isSuccessful()) {
+                    List<Recipe> recipes = response.body();
+                    // Log the response body
+                    Log.d("HomeActivity", "Response Body: " + recipes);
+
+                    if (recipes != null) {
+                        // Process the recipes
+                        updateRecipesCardAdapter(recipes , recipeCardsRecyclerView1);
+                    } else {
+                        // Handle null response
+                        Log.e("HomeActivity", "Null response body");
+                    }
+
+                } else {
+                    // Handle API error based on the status code
+                    Log.e("HomeActivity", "API error: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Recipe>> call, Throwable t) {
+                // Handle API call failure
+                Log.e("HomeActivity", "API call failed: " + t.getMessage());
+            }
+        });
+    }
+
+    private void updateRecipesCardAdapter(List<Recipe> recipes ,RecyclerView recipeCardsRecyclerView) {
+        // Update the RecyclerView adapter with the new list of recipes
+        RecipesCardAdapter recipesCardAdapter = new RecipesCardAdapter(HomeActivity.this, recipes);
+        recipeCardsRecyclerView.setAdapter(recipesCardAdapter);
+    }
+
+
 
 }

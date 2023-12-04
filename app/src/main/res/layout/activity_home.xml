@@ -62,8 +62,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Recipes"
-                android:textSize="18sp"/>
+                android:text="Premium Recipes"
+                android:textSize="24sp"/>
 
             <TextView
                 android:id="@+id/ViewAllText"
@@ -82,18 +82,42 @@
                 android:layout_below="@id/recipesTitleLayout"
                 android:layout_marginTop="16dp"
                 android:background="@color/basicBackgroundColor"/>
-            <!-- Content Goes Here -->
-
-            <!-- Add more views as needed -->
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20dp"
                 android:text="Newest Premium Recipes"/>
 
             <!-- RecyclerView for Recipe Cards -->
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recipeCardsRecyclerView"
+                android:id="@+id/recipeCardsRecyclerView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Deliciously Decadent Keto Chocolate recipes"/>
+
+            <!-- RecyclerView for Recipe Cards -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recipeCardsRecyclerView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Simple Keto Snack ideas"/>
+
+            <!-- RecyclerView for Recipe Cards -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recipeCardsRecyclerView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp" />
