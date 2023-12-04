@@ -23,7 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MealListActivity extends AppCompatActivity {
-    private static final String API_KEY = "dcdedec37a6142a4a44bac515bd77f51";
+    private  String API_KEY = getResources().getString(R.string.api_key);
     private SpoonacularApiService apiService;
     private RecyclerView recyclerView;
     private MealAdapter mealAdapter; // Create a custom adapter for the RecyclerView

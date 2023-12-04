@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">mealPlanner</string>
     <string name="web_client_id">137751589220-vat8h5i6vh5gl6q08lhacl5fuqjqc2a7.apps.googleusercontent.com</string>
+    <string name="api_key">45c63e43840f4d0c964688b06c1d2b92</string>
 </resources>

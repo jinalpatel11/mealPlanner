@@ -19,8 +19,7 @@ public class ApiClient {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-        Log.d("Jinal",retrofit.toString());
-        Log.d("Jinal","retrofit");
+
         return retrofit;
     }
 }

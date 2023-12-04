@@ -63,12 +63,19 @@ public class HomeActivity extends AppCompatActivity {
 
         // In your activity or fragment
         List<RecipeItem> recipeItems = new ArrayList<>();
-        recipeItems.add(new RecipeItem(R.drawable.drink, "Drink"));
-        recipeItems.add(new RecipeItem(R.drawable.drink, "Recipe 2"));
-        recipeItems.add(new RecipeItem(R.drawable.drink, "Recipe 3"));
-        recipeItems.add(new RecipeItem(R.drawable.drink, "Recipe 2"));
-        recipeItems.add(new RecipeItem(R.drawable.drink, "Recipe 3"));
-
+        recipeItems.add(new RecipeItem(R.drawable.drink, "Quick & Easy"));
+        recipeItems.add(new RecipeItem(R.drawable.drink, "Breakfast and Brunch"));
+        recipeItems.add(new RecipeItem(R.drawable.drink, "Lunch"));
+        recipeItems.add(new RecipeItem(R.drawable.drink, "Main Course"));
+        recipeItems.add(new RecipeItem(R.drawable.drink, "Beverage"));
+        recipeItems.add(new RecipeItem(R.drawable.drink, "Salad"));
+        recipeItems.add(new RecipeItem(R.drawable.drink, "Snack"));
+        recipeItems.add(new RecipeItem(R.drawable.drink, "Dessert"));
+        recipeItems.add(new RecipeItem(R.drawable.drink, "Side Course"));
+        recipeItems.add(new RecipeItem(R.drawable.drink, "Vegetarian"));
+        recipeItems.add(new RecipeItem(R.drawable.drink, "Paleo"));
+        recipeItems.add(new RecipeItem(R.drawable.drink, "Gluten Free"));
+        recipeItems.add(new RecipeItem(R.drawable.drink, "Fasting Friendly"));
         // Set up the adapter for the RecyclerView
         RecipesAdapter recipesAdapter = new RecipesAdapter(recipeItems);
         recipesRecyclerView.setAdapter(recipesAdapter);
@@ -78,7 +85,8 @@ public class HomeActivity extends AppCompatActivity {
         // Initialize Retrofit service
         apiService = ApiClient.getClient().create(SpoonacularApiService.class);
 
-
+//TODO: remove comment when project is ready because it is just api calls
+        /*
         // RecipeCard RecyclerView1
         RecyclerView recipeCardsRecyclerView1 = findViewById(R.id.recipeCardsRecyclerView1);
         LinearLayoutManager cardLayoutManager1 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -98,7 +106,7 @@ public class HomeActivity extends AppCompatActivity {
         LinearLayoutManager cardLayoutManager3 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
         recipeCardsRecyclerView3.setLayoutManager(cardLayoutManager3);
-        fetchRecipesByIngredients(recipeCardsRecyclerView3 , "snack");
+        fetchRecipesByIngredients(recipeCardsRecyclerView3 , "snack"); */
 
 
 
@@ -187,11 +195,10 @@ public class HomeActivity extends AppCompatActivity {
 
     private void fetchRecipesByIngredients(RecyclerView recipeCardsRecyclerView1 ,String ingredients) {
         // Call the API to get recipes by ingredients
-        String apiKey = "dcdedec37a6142a4a44bac515bd77f51"; // Replace with your actual API key
 
         int number = 10;
 
-        Call<List<Recipe>> call = apiService.getRecipesByIngredients(apiKey, ingredients, number);
+        Call<List<Recipe>> call = apiService.getRecipesByIngredients(getResources().getString(R.string.api_key), ingredients, number);
 
         call.enqueue(new Callback<List<Recipe>>() {
             @Override

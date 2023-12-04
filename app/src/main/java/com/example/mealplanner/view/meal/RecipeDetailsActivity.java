@@ -64,8 +64,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
     private void fetchRecipeDetailsById(int recipeId) {
         Log.d("RecipeID", String.valueOf(recipeId));
-        String apiKey = "dcdedec37a6142a4a44bac515bd77f51"; // Replace with your Spoonacular API key
-
+        String apiKey = getResources().getString(R.string.api_key);
         // Example: Fetch recipe details by ID
         Call<RecipeDetails> call = apiService.getRecipeInformation(recipeId, apiKey , true);
         call.enqueue(new Callback<RecipeDetails>() {
