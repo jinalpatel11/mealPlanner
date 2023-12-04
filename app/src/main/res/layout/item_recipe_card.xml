@@ -1,9 +1,8 @@
 <!-- res/layout/recipe_card_item.xml -->
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:padding="16dp"
     android:clickable="true"
     android:focusable="true"
@@ -12,9 +11,9 @@
     <ImageView
         android:id="@+id/recipeImageView"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/noun_meal_749510" />
+        android:layout_height="200dp"
+    android:scaleType="centerCrop"
+    android:src="@drawable/noun_meal_749510" />
 
     <TextView
         android:id="@+id/recipeTitleTextView"
@@ -22,6 +21,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_alignBottom="@id/recipeImageView"
+    android:background="#80000000"
+    android:textColor="#FFFFFF"
+    android:padding="8dp"
+    />
 
-</LinearLayout>
+</RelativeLayout>
