@@ -5,11 +5,16 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="8dp"
-    android:background="@drawable/rounded_button_background"
-    android:gravity="center"
-    android:layout_marginLeft="10dp"
-    >
+    android:background="?android:attr/selectableItemBackground"
+    android:gravity="center">
 
+    <!-- Image View -->
+    <ImageView
+        android:id="@+id/recipeItemImageView"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/noun_meal_749510"
+        android:layout_gravity="center"/>
 
     <!-- Text View -->
     <TextView
@@ -17,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:text="Recipe Item Text"
         android:gravity="center"/>
 </LinearLayout>
