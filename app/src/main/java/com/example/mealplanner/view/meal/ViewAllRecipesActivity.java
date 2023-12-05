@@ -4,6 +4,12 @@ package com.example.mealplanner.view.meal;
 // ViewAllRecipesActivity.java
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,5 +53,40 @@ public class ViewAllRecipesActivity extends AppCompatActivity {
         // Set up the adapter for the RecyclerView
         RecipeTitleAdapter recipesAdapter = new RecipeTitleAdapter(recipeTitles);
         recipesRecyclerView.setAdapter(recipesAdapter);
+
+        EditText edtSearchRecipes = findViewById(R.id.edtSearchRecipes);
+        ImageButton cancelButton = findViewById(R.id.cancelButton);
+
+        
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Clear the text in the EditText when the cancel button is clicked
+                edtSearchRecipes.setText("");
+            }
+        });
+
+        edtSearchRecipes.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // Not needed, but required to implement TextWatcher
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // Check if the EditText has text and toggle the cancel button's visibility
+                if (charSequence.length() > 0) {
+                    cancelButton.setVisibility(View.VISIBLE);
+                } else {
+                    cancelButton.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // Not needed, but required to implement TextWatcher
+            }
+        });
+
     }
 }
