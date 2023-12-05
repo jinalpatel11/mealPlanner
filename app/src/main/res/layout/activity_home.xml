@@ -51,8 +51,8 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:padding="8dp"
                 android:layout_gravity="center_vertical"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
             />
         </RelativeLayout>
 

@@ -56,6 +56,10 @@ public class HomeActivity extends AppCompatActivity {
 
         setupViweAllButton();
 
+
+        // Set up click listener for Setting Button
+        setupSettingButton();
+
         // Recipes RecyclerView
         RecyclerView recipesRecyclerView = findViewById(R.id.recipesRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -134,12 +138,7 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(loginIntent);
         finish();
     }
-    private void navigateToMealList() {
-        // Navigate to the MealListActivity and finish the current activity
-        Intent loginIntent = new Intent(HomeActivity.this, MealListActivity.class);
-        startActivity(loginIntent);
 
-    }
 
     // Function to extract the initial from the email address
     private String extractInitial(String email) {
@@ -165,6 +164,15 @@ public class HomeActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
         googleSignInClient = GoogleSignIn.getClient(this, gso);
+    }
+
+    private void setupSettingButton() {
+        binding.emailTextView.setOnClickListener(view -> {
+            // Navigate to the SettingActivity and finish the current activity
+            Intent settingIntent = new Intent(HomeActivity.this, SettingActivity.class);
+            startActivity(settingIntent);
+        });
+
     }
 
     private void setupLogoutButton() {
