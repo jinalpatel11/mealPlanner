@@ -9,6 +9,7 @@
 
         <color name="caloriesColor">#FF0000</color>
         <color name="proteinColor">#00FF00</color>
+    <color name="colorAccent">#FF4081</color>
 
 
 </resources>

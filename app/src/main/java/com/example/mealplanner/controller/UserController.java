@@ -17,11 +17,9 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-
-
     public boolean register(String username, String password) {
-        if (!userRepository.isUserExist(username)) {
-            User user = new User(username, password);
+        if (!userRepository.isUserEmailIdExist(username)) {
+            User user = new User(username, password,"","","","","","","","");
             userRepository.addUser(user);
             return true; // Registration successful
         }

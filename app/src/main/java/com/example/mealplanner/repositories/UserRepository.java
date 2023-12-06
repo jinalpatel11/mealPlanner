@@ -21,8 +21,8 @@ public class UserRepository {
         return databaseHelper.getUser(username);
     }
 
-    public boolean isUserExist(String username) {
-        return databaseHelper.isUserExist(username);
+    public boolean isUserEmailIdExist(String email) {
+        return databaseHelper.isEmailExist(email);
     }
 
     public boolean isPasswordCorrect(String username, String password) {

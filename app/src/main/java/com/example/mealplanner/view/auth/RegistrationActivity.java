@@ -40,7 +40,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     redirectToLogin();
                 } else {
                     // Failed registration (username already exists)
-                    Toast.makeText(RegistrationActivity.this, "Username already exists", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistrationActivity.this, "Email already exists", Toast.LENGTH_SHORT).show();
                 }
             }
         });
