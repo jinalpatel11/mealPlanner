@@ -3,6 +3,8 @@ package com.example.mealplanner.view.auth;
 // RegistrationActivity.java
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
@@ -12,7 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mealplanner.R;
 import com.example.mealplanner.controller.UserController;
 import com.example.mealplanner.databinding.ActivityRegistrationBinding;
+import com.example.mealplanner.model.User;
 import com.example.mealplanner.repositories.UserRepository;
+import com.example.mealplanner.view.home.ActivityBirthQuestion;
+import com.example.mealplanner.view.home.ActivityHeightQuestion;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,18 +47,34 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 if(validateFields())
                 {
-                    String username = binding.editTextFirstName.getText().toString();
+                    String firstName = binding.editTextFirstName.getText().toString();
                     String password = binding.editTextPassword.getText().toString();
+                    String email = binding.editTextEmail.getText().toString();
 
-                    if (userController.register(username, password)) {
-                        // Successful registration
-                        Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
-                        // Redirect to LoginActivity
-                        redirectToLogin();
-                    } else {
-                        // Failed registration (username already exists)
-                        Toast.makeText(RegistrationActivity.this, "Email already exists", Toast.LENGTH_SHORT).show();
+                    Intent intent = getIntent();
+                    if (intent != null) {
+                        User user = intent.getParcelableExtra("user");
+
+                        if (user != null) {
+
+                            user.setFirstName(firstName);
+                            user.setPassword(password);
+                            user.setEmail(email);
+
+                            if (userController.register(user)) {
+                                // Successful registration
+                                Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                                // Redirect to LoginActivity
+                                redirectToLogin();
+                            } else {
+                                // Failed registration (email already exists)
+                                Toast.makeText(RegistrationActivity.this, "Email already exists try to login", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+
                     }
+
                 }else
                 {
 
@@ -69,8 +90,6 @@ public class RegistrationActivity extends AppCompatActivity {
         startActivity(loginIntent);
         finish(); // Finish the RegistrationActivity to prevent going back
     }
-
-
 
     // Validate user input fields
     private boolean validateFields() {

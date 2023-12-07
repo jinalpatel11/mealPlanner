@@ -25,7 +25,7 @@ public class UserRepository {
         return databaseHelper.isEmailExist(email);
     }
 
-    public boolean isPasswordCorrect(String username, String password) {
-        return databaseHelper.isPasswordCorrect(username, password);
+    public boolean isPasswordCorrect(String email, String password) {
+        return databaseHelper.isPasswordCorrect(email, password);
     }
 }

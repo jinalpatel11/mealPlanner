@@ -1,8 +1,8 @@
 package com.example.mealplanner.repositories;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -11,7 +11,7 @@ import com.example.mealplanner.model.User;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "user_db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     // Table name and columns
     private static final String TABLE_USERS = "users";
@@ -30,7 +30,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Create table query
     private static final String CREATE_TABLE_USERS =
             "CREATE TABLE " + TABLE_USERS + " (" +
-                    COLUMN_USERNAME + " TEXT PRIMARY KEY," +
+                    COLUMN_EMAIL + " TEXT PRIMARY KEY," +
+                    COLUMN_USERNAME + " TEXT," +
                     COLUMN_PASSWORD + " TEXT," +
                     COLUMN_PROFILE_PHOTO + " TEXT," +
                     COLUMN_FIRST_NAME + " TEXT," +
@@ -38,9 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_BIRTHDAY + " TEXT," +
                     COLUMN_HEIGHT + " TEXT," +
                     COLUMN_WEIGHT + " TEXT," +
-                    COLUMN_ACTIVITY_LEVEL + " TEXT," +
-                    COLUMN_EMAIL + " TEXT)";
-
+                    COLUMN_ACTIVITY_LEVEL + " TEXT)";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -48,60 +47,68 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE_USERS);
+        try {
+            db.execSQL(CREATE_TABLE_USERS);
+        } catch (SQLException e) {
+            // Handle database creation error
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Drop older table if it exists and create new ones
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
-        onCreate(db);
+        try {
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+            onCreate(db);
+        } catch (SQLException e) {
+            // Handle database upgrade error
+            e.printStackTrace();
+        }
     }
 
     // Method to add a user to the database
     public long addUser(User user) {
-        SQLiteDatabase db = this.getWritableDatabase();
 
-        // Check if the email already exists
-        if (!isEmailExist(user.getEmail())) {
-            ContentValues values = new ContentValues();
-            values.put(COLUMN_USERNAME, user.getUsername());
-            values.put(COLUMN_PASSWORD, user.getPassword());
-            values.put(COLUMN_PROFILE_PHOTO, user.getProfilePhoto());
-            values.put(COLUMN_FIRST_NAME, user.getFirstName());
-            values.put(COLUMN_LAST_NAME, user.getLastName());
-            values.put(COLUMN_BIRTHDAY, user.getBirthdate());
-            values.put(COLUMN_HEIGHT, user.getHeight());
-            values.put(COLUMN_WEIGHT, user.getWeight());
-            values.put(COLUMN_ACTIVITY_LEVEL, user.getActivityLevel());
-            values.put(COLUMN_EMAIL, user.getEmail());
+        try ( SQLiteDatabase db = this.getWritableDatabase();) {
+            // Check if the email already exists
+            if (!isEmailExist( user.getEmail())) {
+                ContentValues values = new ContentValues();
+                values.put(COLUMN_USERNAME, user.getUsername());
+                values.put(COLUMN_PASSWORD, user.getPassword());
+                values.put(COLUMN_PROFILE_PHOTO, user.getProfilePhoto());
+                values.put(COLUMN_FIRST_NAME, user.getFirstName());
+                values.put(COLUMN_LAST_NAME, user.getLastName());
+                values.put(COLUMN_BIRTHDAY, user.getBirthdate());
+                values.put(COLUMN_HEIGHT, user.getHeight());
+                values.put(COLUMN_WEIGHT, user.getWeight());
+                values.put(COLUMN_ACTIVITY_LEVEL, user.getActivityLevel());
+                values.put(COLUMN_EMAIL, user.getEmail());
 
-            long result = db.insert(TABLE_USERS, null, values);
-            db.close();
-            return result;
-        } else {
-            // Return -1 indicating the user with that email already exists
-            db.close();
+                long result = db.insert(TABLE_USERS, null, values);
+                return result;
+            } else {
+                // Return -1 indicating the user with that email already exists
+                return -1;
+            }
+        } catch (SQLException e) {
+            // Handle database error
+            e.printStackTrace();
             return -1;
         }
     }
 
     // Method to check if email already exists
-    public boolean isEmailExist(String email) {
+    public boolean isEmailExist( String email) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_USERS, null, COLUMN_EMAIL + "=?",
-                new String[]{email}, null, null, null);
-
-        boolean result = cursor != null && cursor.getCount() > 0;
-
-        if (cursor != null) {
-            cursor.close();
+        try (Cursor cursor = db.query(TABLE_USERS, null, COLUMN_EMAIL + "=?",
+                new String[]{email}, null, null, null)) {
+            return cursor != null && cursor.getCount() > 0;
+        } catch (SQLException e) {
+            // Handle database error
+            e.printStackTrace();
+            return false;
         }
-        db.close();
-
-        return result;
     }
-
 
     // Method to get a user from the database
     public User getUser(String email) {
@@ -112,7 +119,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor != null && cursor.moveToFirst()) {
             user = new User();
-
             for (int i = 0; i < cursor.getColumnCount(); i++) {
                 String columnName = cursor.getColumnName(i);
                 switch (columnName) {
@@ -149,20 +155,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     // Add cases for other columns as needed
                 }
             }
-
             cursor.close();
         }
+
         db.close();
+
         return user;
     }
 
-
     // Method to check if the entered password is correct for a user
-    public boolean isPasswordCorrect(String username, String password) {
+    public boolean isPasswordCorrect(String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_USERS, null,
-                COLUMN_USERNAME + "=? AND " + COLUMN_PASSWORD + "=?",
-                new String[]{username, password}, null, null, null);
+                COLUMN_EMAIL + "=? AND " + COLUMN_PASSWORD + "=?",
+                new String[]{email, password}, null, null, null);
         boolean result = cursor != null && cursor.getCount() > 0;
         if (cursor != null) {
             cursor.close();

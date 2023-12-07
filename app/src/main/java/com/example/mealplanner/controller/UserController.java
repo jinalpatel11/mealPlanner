@@ -17,17 +17,20 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    public boolean register(String username, String password) {
-        if (!userRepository.isUserEmailIdExist(username)) {
-            User user = new User(username, password,"","","","","","","","");
+    public boolean checkUserEmailIdExist(String email) {
+       return userRepository.isUserEmailIdExist(email);
+    }
+
+    public boolean register(User user) {
+        if (!userRepository.isUserEmailIdExist(user.getEmail())) {
             userRepository.addUser(user);
             return true; // Registration successful
         }
         return false; // User already exists
     }
 
-    public boolean signIn(String username, String password) {
-        return userRepository.isPasswordCorrect(username, password);
+    public boolean signIn(String email, String password) {
+        return userRepository.isPasswordCorrect(email, password);
     }
 
 

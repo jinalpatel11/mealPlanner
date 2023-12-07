@@ -38,10 +38,10 @@
         />
 
     <EditText
-        android:id="@+id/editTextUsername"
+        android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
+        android:hint="Email"
         android:layout_marginBottom="16dp"
         android:layout_below="@+id/textPleaseSign"/>
 
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:hint="Password"
-        android:layout_below="@+id/editTextUsername"
+        android:layout_below="@+id/editTextEmail"
         android:layout_marginBottom="16dp"/>
 
     <TextView

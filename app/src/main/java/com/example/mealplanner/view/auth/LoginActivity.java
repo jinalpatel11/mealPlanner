@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mealplanner.controller.UserController;
 import com.example.mealplanner.databinding.ActivityLoginBinding;
 import com.example.mealplanner.repositories.UserRepository;
+import com.example.mealplanner.view.home.AppHomeActivity;
 import com.example.mealplanner.view.home.HomeActivity;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -83,10 +84,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void handleNormalSignIn() {
-        String username = binding.editTextUsername.getText().toString();
+        String email = binding.editTextEmail.getText().toString();
         String password = binding.editTextPassword.getText().toString();
 
-        if (userController.signIn(username, password)) {
+        if (userController.signIn(email, password)) {
             // Sign-in successful
             showToast("Sign-in successful");
 
@@ -124,20 +125,39 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void handleGoogleSignInResult(GoogleSignInResult result) {
+        //Check if the email is already register on app or not
+
         if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
-            // Now you can use 'account' to authenticate the user or extract user details
-            // For example, you can get the user's display name: account.getDisplayName()
-            // and email: account.getEmail()
-            Toast.makeText(this, "Google Sign-In successful", Toast.LENGTH_SHORT).show();
 
-            // Pass the email address to HomeActivity
+
             String userEmail = account.getEmail();
-            Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
-            homeIntent.putExtra("USER_EMAIL", userEmail);
-            startActivity(homeIntent);
+            if(userController.checkUserEmailIdExist(userEmail))
+            {
+                // Now you can use 'account' to authenticate the user or extract user details
+                // For example, you can get the user's display name: account.getDisplayName()
+                // and email: account.getEmail()
+                Toast.makeText(this, "Google Sign-In successful", Toast.LENGTH_SHORT).show();
 
-            finish(); // Optional: finish the LoginActivity to prevent going back
+                // Pass the email address to HomeActivity
+                Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
+                homeIntent.putExtra("USER_EMAIL", userEmail);
+                startActivity(homeIntent);
+
+                finish(); // Optional: finish the LoginActivity to prevent going back
+            }else
+            {
+                //redirect to app home activity to get register user on app
+                // Pass the email address to HomeActivity
+                Intent homeIntent = new Intent(LoginActivity.this, AppHomeActivity.class);
+                homeIntent.putExtra("USER_EMAIL", userEmail);
+                startActivity(homeIntent);
+
+                finish(); // Optional: finish the LoginActivity to prevent going back
+            }
+
+
+
         } else {
             Toast.makeText(this, "Google Sign-In failed", Toast.LENGTH_SHORT).show();
         }
