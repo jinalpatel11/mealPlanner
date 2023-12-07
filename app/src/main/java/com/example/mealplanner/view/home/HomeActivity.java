@@ -16,6 +16,7 @@ import com.example.mealplanner.model.meal.Recipe;
 import com.example.mealplanner.model.RecipeItem;
 import com.example.mealplanner.network.ApiClient;
 import com.example.mealplanner.network.SpoonacularApiService;
+import com.example.mealplanner.view.BaseActivity;
 import com.example.mealplanner.view.auth.LoginActivity;
 import com.example.mealplanner.view.meal.MealListActivity;
 import com.example.mealplanner.view.meal.RecipesAdapter;
@@ -33,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
 
     private ActivityHomeBinding binding;
     private GoogleSignInClient googleSignInClient;
@@ -117,54 +118,13 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setupUserInfo() {
-        Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("USER_EMAIL")) {
-            String userEmail = intent.getStringExtra("USER_EMAIL");
+
+            String userEmail =getUserEmailFromSession();
             String userInitial = extractInitial(userEmail);
             binding.emailTextView.setText(userInitial);
-        }
-    }
-    private void signOut() {
-        // Sign out from Google Sign-In
-        googleSignInClient.signOut().addOnCompleteListener(this,
-                task -> {
-                    // Optional: Perform any additional sign-out actions
-                });
+
     }
 
-    private void navigateToLogin() {
-        // Navigate to the LoginActivity and finish the current activity
-        Intent loginIntent = new Intent(HomeActivity.this, LoginActivity.class);
-        startActivity(loginIntent);
-        finish();
-    }
-
-
-    // Function to extract the initial from the email address
-    private String extractInitial(String email) {
-        // Check if the email is not null and contains the "@" symbol
-        if (email != null && email.contains("@")) {
-            // Extract the part before the "@" symbol
-            String[] parts = email.split("@");
-            if (parts.length > 0) {
-                // Get the first part (username) and extract the initial
-                String username = parts[0];
-                if (!username.isEmpty()) {
-                    // Return the first character as the initial
-                    return String.valueOf(username.charAt(0));
-                }
-            }
-        }
-        // Return a default value or handle the case where the email format is unexpected
-        return "";
-    }
-
-    private void setupGoogleSignIn() {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        googleSignInClient = GoogleSignIn.getClient(this, gso);
-    }
 
     private void setupSettingButton() {
         binding.emailTextView.setOnClickListener(view -> {
@@ -178,10 +138,8 @@ public class HomeActivity extends AppCompatActivity {
     private void setupLogoutButton() {
         binding.logoutButton.setOnClickListener(view -> {
             // Handle logout action
-            signOut();// Sign out from Google Sign-In
-            navigateToLogin(); // Navigate to the LoginActivity and finish the current activity
-        });
-
+          logout();
+              });
     }
 
 
@@ -246,7 +204,5 @@ public class HomeActivity extends AppCompatActivity {
         RecipesCardAdapter recipesCardAdapter = new RecipesCardAdapter(HomeActivity.this, recipes);
         recipeCardsRecyclerView.setAdapter(recipesCardAdapter);
     }
-
-
-
+    
 }

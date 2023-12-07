@@ -1,6 +1,7 @@
 package com.example.mealplanner.view.auth;
-
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mealplanner.controller.UserController;
 import com.example.mealplanner.databinding.ActivityLoginBinding;
 import com.example.mealplanner.repositories.UserRepository;
+import com.example.mealplanner.view.BaseActivity;
 import com.example.mealplanner.view.home.AppHomeActivity;
 import com.example.mealplanner.view.home.HomeActivity;
 import com.google.android.gms.auth.api.Auth;
@@ -20,13 +22,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class LoginActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private UserController userController;
     private ActivityLoginBinding binding;
     private GoogleApiClient googleApiClient;
     private static final int RC_SIGN_IN = 9001;
 
+
+    private static final String PREFS_NAME = "MyPrefsFile";
+    private static final String USER_EMAIL_KEY = "user_email";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         userController = new UserController(userRepository);
 
         // Set up Google Sign-In
-        setupGoogleSignIn();
+        setupGoogleSignInLogin();
 
         // Set up UI components and event handlers
         setupUI();
@@ -47,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     }
 
-    private void setupGoogleSignIn() {
+    private void setupGoogleSignInLogin() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -132,6 +137,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
             String userEmail = account.getEmail();
+            // Save user email in SharedPreferences
+            saveUserEmailInSession(userEmail);
             if(userController.checkUserEmailIdExist(userEmail))
             {
                 // Now you can use 'account' to authenticate the user or extract user details
@@ -163,13 +170,19 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
+
 
     private void redirectToHome() {
         Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
         startActivity(homeIntent);
         finish(); // Optional: finish the LoginActivity to prevent going back
     }
+
+    private void saveUserEmailInSession(String userEmail) {
+        SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit();
+        editor.putString(USER_EMAIL_KEY, userEmail);
+        editor.apply();
+    }
+
+
 }
