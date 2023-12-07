@@ -55,7 +55,7 @@
         android:orientation="vertical"
         android:layout_below="@id/headerLayout"
         android:layout_margin="10dp"
-        android:padding="16dp">
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/registerHeaderText"
@@ -79,7 +79,7 @@
                 android:id="@+id/editTextFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/icons8arrowright30"
+                android:drawableStart="@drawable/icons8user30"
                 android:drawablePadding="8dp"
                 android:inputType="text"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -97,7 +97,7 @@
                 android:id="@+id/editTextEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/icons8arrowright30"
+                android:drawableStart="@drawable/icons8mail30"
                 android:drawablePadding="8dp"
                 android:inputType="text"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -114,7 +114,7 @@
                 android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/icons8arrowright30"
+                android:drawableStart="@drawable/icons8password30"
                 android:drawablePadding="8dp"
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>

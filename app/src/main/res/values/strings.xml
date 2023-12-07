@@ -2,4 +2,11 @@
     <string name="app_name">mealPlanner</string>
     <string name="web_client_id">137751589220-vat8h5i6vh5gl6q08lhacl5fuqjqc2a7.apps.googleusercontent.com</string>
     <string name="api_key">45c63e43840f4d0c964688b06c1d2b92</string>
+
+    <string name="name_required">Name is required</string>
+    <string name="email_required">Email is required</string>
+    <string name="invalid_email">Invalid Email Address</string>
+    <string name="password_required">Password is required</string>
+    <string name="invalid_password">Password must contain at least 8 characters, including one digit, one lowercase letter, one uppercase letter, and one special character.</string>
+
 </resources>
