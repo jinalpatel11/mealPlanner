@@ -3,29 +3,149 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:padding="0dp"
     tools:context=".view.auth.RegistrationActivity">
 
-    <EditText
-        android:id="@+id/editTextUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Username"
-        android:layout_marginBottom="16dp"/>
 
-    <EditText
-        android:id="@+id/editTextPassword"
+    <!-- Header -->
+    <LinearLayout
+        android:id="@+id/headerLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:hint="Password"
-        android:layout_below="@+id/editTextUsername"
-        android:layout_marginBottom="16dp"/>
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:paddingTop="10dp"
+        android:background="@color/second">
 
-    <Button
-        android:id="@+id/buttonRegister"
+        <!-- Cancel ImageButton -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp">
+
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icons8backarrow50"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="8dp"
+                android:layout_gravity="center_vertical"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                />
+        </RelativeLayout>
+
+        <!-- Title -->
+        <ImageView
+            android:id="@+id/titleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/meal_planner_logos"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <!-- Content below header with padding -->
+    <LinearLayout
+        android:id="@+id/contentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register"
-        android:layout_below="@+id/editTextPassword"/>
+        android:orientation="vertical"
+        android:layout_below="@id/headerLayout"
+        android:layout_margin="10dp"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/registerHeaderText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Let's set up your account"
+            android:layout_below="@id/headerLayout"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:textSize="24dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/firstNameInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="First Name"
+            android:layout_marginBottom="16dp"
+            android:layout_below="@+id/registerHeaderText">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/icons8arrowright30"
+                android:drawablePadding="8dp"
+                android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Repeat the same pattern for other EditText items -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:layout_marginBottom="16dp"
+            android:layout_below="@+id/firstNameInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/icons8arrowright30"
+                android:drawablePadding="8dp"
+                android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:layout_below="@+id/emailInputLayout"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/icons8arrowright30"
+                android:drawablePadding="8dp"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/buttonRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create My Account"
+            android:layout_below="@+id/passwordInputLayout"/>
+
+        <TextView
+            android:id="@+id/textOR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="---------OR---------"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/buttonRegister"
+            />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/googleSignInButton"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/textOR"
+
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+
+
+
 </RelativeLayout>

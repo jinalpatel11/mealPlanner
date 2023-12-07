@@ -30,7 +30,7 @@ public class RegistrationActivity extends AppCompatActivity {
         binding.buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = binding.editTextUsername.getText().toString();
+                String username = binding.editTextFirstName.getText().toString();
                 String password = binding.editTextPassword.getText().toString();
 
                 if (userController.register(username, password)) {

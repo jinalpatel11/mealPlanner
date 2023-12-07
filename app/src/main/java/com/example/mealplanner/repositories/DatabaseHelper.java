@@ -70,7 +70,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(COLUMN_PROFILE_PHOTO, user.getProfilePhoto());
             values.put(COLUMN_FIRST_NAME, user.getFirstName());
             values.put(COLUMN_LAST_NAME, user.getLastName());
-            values.put(COLUMN_BIRTHDAY, user.getBirthday());
+            values.put(COLUMN_BIRTHDAY, user.getBirthdate());
             values.put(COLUMN_HEIGHT, user.getHeight());
             values.put(COLUMN_WEIGHT, user.getWeight());
             values.put(COLUMN_ACTIVITY_LEVEL, user.getActivityLevel());
@@ -132,7 +132,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         user.setLastName(cursor.getString(i));
                         break;
                     case COLUMN_BIRTHDAY:
-                        user.setBirthday(cursor.getString(i));
+                        user.setBirthdate(cursor.getString(i));
                         break;
                     case COLUMN_HEIGHT:
                         user.setHeight(cursor.getString(i));

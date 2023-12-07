@@ -1,6 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Header -->
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:paddingTop="10dp"
+        android:background="@color/second">
+
+        <!-- Cancel ImageButton -->
+        <!-- Add your cancel button here -->
+
+        <!-- Title -->
+        <ImageView
+            android:id="@+id/titleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/meal_planner_logos"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <!-- Slider and Value in a Horizontal LinearLayout -->
+    <LinearLayout
+        android:id="@+id/sliderLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/headerLayout"
+        android:layout_marginTop="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <!-- Slider -->
+        <SeekBar
+            android:id="@+id/slider"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="6"
+            android:progress="1"
+            android:splitTrack="false"
+            android:thumb="@drawable/slider_thumb"
+            android:enabled="false" />
+
+        <!-- Slider Value TextView -->
+        <TextView
+            android:id="@+id/sliderValueTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1/6"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:visibility="visible" />
+    </LinearLayout>
+
+
+    <!-- Your existing code -->
+
+    <!-- Your EditText and TextViews -->
+    <TextView
+        android:id="@+id/activityLevelQuestionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sliderLayout"
+        android:text="How Active are you?"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp" />
+
+    <!-- Second Slider and Value TextView -->
+    <LinearLayout
+        android:id="@+id/activityLevelSliderLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/activityLevelQuestionTextView"
+        android:layout_marginTop="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <!-- Second Slider -->
+        <SeekBar
+            android:id="@+id/activityLevelSlider"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="4"
+            android:splitTrack="false"
+            android:thumb="@drawable/slider_thumb"
+            android:progress="0"
+            android:enabled="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp" />
+
+        <!-- Second Slider Value TextView -->
+        <TextView
+            android:id="@+id/activityLevelValueTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sedentary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <!-- Your existing code -->
+
+
+
+
+
+
+    <!-- Button: Continue -->
+    <Button
+        android:id="@+id/btnContinue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Continue"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        />
+
+</RelativeLayout>

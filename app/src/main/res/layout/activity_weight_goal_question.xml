@@ -1,6 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Header -->
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:paddingTop="10dp"
+        android:background="@color/second">
+
+        <!-- Cancel ImageButton -->
+        <!-- Add your cancel button here -->
+
+        <!-- Title -->
+        <ImageView
+            android:id="@+id/titleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/meal_planner_logos"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <!-- Slider and Value in a Horizontal LinearLayout -->
+    <LinearLayout
+        android:id="@+id/sliderLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/headerLayout"
+        android:layout_marginTop="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <!-- Slider -->
+        <SeekBar
+            android:id="@+id/slider"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="6"
+            android:progress="2"
+            android:splitTrack="false"
+            android:thumb="@drawable/slider_thumb"
+            android:enabled="false" />
+
+        <!-- Slider Value TextView -->
+        <TextView
+            android:id="@+id/sliderValueTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2/6"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:visibility="visible" />
+    </LinearLayout>
+
+
+    <!-- Your EditText and TextViews -->
+    <TextView
+        android:id="@+id/weightQuestionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sliderLayout"
+        android:text="What's your goal weight?"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp" />
+
+
+    <!-- ... Your existing layout code ... -->
+
+    <RelativeLayout
+        android:id="@+id/weightInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/weightQuestionTextView"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal">
+
+        <!-- EditText for weight input -->
+        <EditText
+            android:id="@+id/edtTargetWeightValue"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="numberDecimal"
+            android:hint="Enter weight"
+            android:digits="0123456789."
+            android:layout_marginEnd="8dp"/>
+
+        <!-- Button  kg -->
+        <Button
+            android:id="@+id/btnKg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="KG"
+            android:onClick="convertToKg"
+            android:layout_toEndOf="@id/edtTargetWeightValue" />
+
+        <!-- Button lb -->
+        <Button
+            android:id="@+id/btnLb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LB"
+            android:onClick="convertToLb"
+            android:layout_toEndOf="@id/btnKg" />
+    </RelativeLayout>
+
+
+
+    <TextView
+        android:id="@+id/weightNotesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/weightInputLayout"
+        android:text="You can update your weight at any time"
+        android:textSize="18sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp" />
+    <!-- Button: Continue -->
+    <Button
+        android:id="@+id/btnContinue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Continue"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        />
+
+</RelativeLayout>

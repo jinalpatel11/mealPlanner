@@ -2,6 +2,7 @@ package com.example.mealplanner.view.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mealplanner.R;
 import com.example.mealplanner.model.GoalItem;
+import com.example.mealplanner.model.User;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class ActivityWeightQuestion extends AppCompatActivity {
@@ -24,8 +27,6 @@ public class ActivityWeightQuestion extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weight_question);
-
-
 
         edtWeightValue = findViewById(R.id.edtWeightValue);
         btnKg = findViewById(R.id.btnKg);
@@ -78,36 +79,24 @@ public class ActivityWeightQuestion extends AppCompatActivity {
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Pass selected choice to ActivityWeightQuestion
+                // Get the weight value from the EditText
+                String weightValue = edtWeightValue.getText().toString();
+
+                // Create a User object or retrieve the existing one from your application logic
+                User user = new User();
+
+                // Set the weight value and unit in the User object
+                user.setWeight(weightValue);
+                user.setWeightUnit(selectedUnit);
+
+                // Pass the User object to the next activity
                 Intent intent = new Intent(ActivityWeightQuestion.this, ActivityWeightGoalQuestion.class);
-                // Add extras to pass data to next activity
-                // Example: intent.putExtra("selectedActivityType", selectedActivityType);
+                intent.putExtra("user", (Parcelable) user);
                 intent.putExtra("stepCount", 2); // Initial step count
                 startActivity(intent);
             }
         });
+
     }
 
-
-    public void convertToKg(View view) {
-        // Handle conversion to KG when KG button is clicked
-        String weightString = edtWeightValue.getText().toString();
-        if (!weightString.isEmpty()) {
-            double weight = Double.parseDouble(weightString);
-            // Convert to KG (1 LB = 0.453592 KG)
-            double kgWeight = weight * 0.453592;
-            edtWeightValue.setText(String.valueOf(kgWeight));
-        }
-    }
-
-    public void convertToLb(View view) {
-        // Handle conversion to LB when LB button is clicked
-        String weightString = edtWeightValue.getText().toString();
-        if (!weightString.isEmpty()) {
-            double weight = Double.parseDouble(weightString);
-            // Convert to LB (1 KG = 2.20462 LB)
-            double lbWeight = weight * 2.20462;
-            edtWeightValue.setText(String.valueOf(lbWeight));
-        }
-    }
 }

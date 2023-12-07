@@ -1,0 +1,7 @@
+<!-- res/drawable/radio_button_selector.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Unselected state -->
+    <item android:drawable="@drawable/icons8circle50" android:state_checked="false" />
+    <!-- Selected state -->
+    <item android:drawable="@drawable/icons8filledcircle48" android:state_checked="true" />
+</selector>

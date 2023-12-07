@@ -2,12 +2,16 @@ package com.example.mealplanner.view.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mealplanner.R;
+import com.example.mealplanner.model.User;
 
 public class ActivityHeightQuestion extends AppCompatActivity {
     @Override
@@ -16,17 +20,46 @@ public class ActivityHeightQuestion extends AppCompatActivity {
         setContentView(R.layout.activity_height_question);
 
         Button btnContinue = findViewById(R.id.btnContinue);
-
+        EditText edtHeightValue = findViewById(R.id.edtHeightValue);
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Pass selected choice to ActivityWeightQuestion
-                Intent intent = new Intent(ActivityHeightQuestion.this, ActivityBirthQuestion.class);
-                // Add extras to pass data to next activity
-                // Example: intent.putExtra("selectedActivityType", selectedActivityType);
-                intent.putExtra("stepCount", 5); // Initial step count
-                startActivity(intent);
+                // Get the target weight value from the EditText
+                String heightValue = edtHeightValue.getText().toString();
+
+
+                Intent intent = getIntent();
+                if (intent != null) {
+                  User user = intent.getParcelableExtra("user");
+
+                    if (user != null) {
+                        // Access the weight and weight unit from the User object
+                        String weight = user.getWeight();
+                        String weightUnit = user.getWeightUnit();
+
+                        // Use the weight information as needed
+                        Log.d("UserWeight", "Weight: " + weight + " " + weightUnit);
+
+                        user.setHeight(heightValue);
+
+                        Log.d("UserValues", "Username: " + user.getUsername());
+                        Log.d("UserValues", "Weight: " + user.getWeight() + " " + user.getWeightUnit());
+                        Log.d("UserValues", "Target Weight: " + user.getTargetWeight() + " " + user.getTargetWeightUnit());
+
+                        // Pass the updated User object to the next activity
+                        intent = new Intent(ActivityHeightQuestion.this, ActivityBirthQuestion.class);
+                        intent.putExtra("user",(Parcelable) user);
+                        startActivity(intent);
+
+                    }
+
+                }
+
+
+
             }
         });
+
+
     }
 }
