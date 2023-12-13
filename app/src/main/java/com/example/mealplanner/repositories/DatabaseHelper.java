@@ -11,7 +11,7 @@ import com.example.mealplanner.model.User;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "user_db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     // Table name and columns
     private static final String TABLE_USERS = "users";
@@ -27,6 +27,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_ACTIVITY_LEVEL = "activity_level";
     private static final String COLUMN_EMAIL = "email";
 
+    private static final String COLUMN_SEX = "sex";
+
     // Create table query
     private static final String CREATE_TABLE_USERS =
             "CREATE TABLE " + TABLE_USERS + " (" +
@@ -39,6 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_BIRTHDAY + " TEXT," +
                     COLUMN_HEIGHT + " TEXT," +
                     COLUMN_WEIGHT + " TEXT," +
+                    COLUMN_SEX + " TEXT," +
                     COLUMN_ACTIVITY_LEVEL + " TEXT)";
 
     public DatabaseHelper(Context context) {
@@ -83,7 +86,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 values.put(COLUMN_WEIGHT, user.getWeight());
                 values.put(COLUMN_ACTIVITY_LEVEL, user.getActivityLevel());
                 values.put(COLUMN_EMAIL, user.getEmail());
-
+                values.put(COLUMN_SEX, user.getSex());
                 long result = db.insert(TABLE_USERS, null, values);
                 return result;
             } else {
@@ -152,6 +155,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     case COLUMN_EMAIL:
                         user.setEmail(cursor.getString(i));
                         break;
+                    case COLUMN_SEX:
+                        user.setSex(cursor.getString(i));
+                        break;
                     // Add cases for other columns as needed
                 }
             }
@@ -191,6 +197,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_BIRTHDAY, updatedUser.getBirthdate());
         values.put(COLUMN_HEIGHT, updatedUser.getHeight());
         values.put(COLUMN_WEIGHT, updatedUser.getWeight());
+        values.put(COLUMN_SEX, updatedUser.getSex());
         values.put(COLUMN_ACTIVITY_LEVEL, updatedUser.getActivityLevel());
 
         int rowsAffected = db.update(TABLE_USERS, values,

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -60,6 +62,7 @@ public class HomeActivity extends BaseActivity {
         // Set up click listener for Setting Button
         setupSettingButton();
 
+
         // Recipes RecyclerView
         RecyclerView recipesRecyclerView = findViewById(R.id.recipesRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -115,6 +118,9 @@ public class HomeActivity extends BaseActivity {
 
 
     }
+
+
+
 
     private void setupUserInfo() {
 
@@ -203,5 +209,6 @@ public class HomeActivity extends BaseActivity {
         RecipesCardAdapter recipesCardAdapter = new RecipesCardAdapter(HomeActivity.this, recipes);
         recipeCardsRecyclerView.setAdapter(recipesCardAdapter);
     }
+
 
 }

@@ -2,10 +2,13 @@ package com.example.mealplanner.view;
 
 
 import android.content.Context;
-        import android.content.Intent;
+import android.content.DialogInterface;
+import android.content.Intent;
         import android.content.SharedPreferences;
         import android.os.Bundle;
 import android.widget.Toast;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
 import androidx.annotation.Nullable;
         import androidx.appcompat.app.AppCompatActivity;
@@ -148,6 +151,37 @@ public class BaseActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TermsServiceActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Check if the current activity is the HomeActivity
+        if (this instanceof HomeActivity) {
+            // Handle back navigation for HomeActivity
+            // For example, show a confirmation dialog or take a specific action
+            // You can customize this part based on your app's requirements
+            showExitConfirmationDialog();
+        } else {
+            // For other activities, proceed with the default back navigation behavior
+            super.onBackPressed();
+        }
+    }
+
+    private void showExitConfirmationDialog() {
+        // Implement your logic to show a confirmation dialog
+        // You can use AlertDialog or a custom dialog for this purpose
+        // For example:
+        new AlertDialog.Builder(this)
+                .setTitle("Exit Confirmation")
+                .setMessage("Are you sure you want to exit?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish(); // Finish the current activity
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
 

@@ -1,6 +1,8 @@
 package com.example.mealplanner.view.setting;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,6 +38,23 @@ public class DeveloperDetailsActivity extends BaseActivity {
         DeveloperAdapter developerAdapter = new DeveloperAdapter(developerList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(developerAdapter);
+
+        //set up cancel button
+        setupCancelButton();
     }
+
+    private  void setupCancelButton(){
+        // Assuming you have a button in your layout with the ID "backButton"
+        ImageButton backButton = findViewById(R.id.cancelButton);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Call onBackPressed to simulate the back button press
+                onBackPressed();
+            }
+        });
+    }
+
 
 }

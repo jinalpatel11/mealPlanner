@@ -8,18 +8,26 @@
         android:id="@+id/titleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Update Profile Photo"
+        android:text="Update Sex"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginBottom="16dp"/>
 
-    <!-- Add your UI components for updating the profile photo -->
+    <!-- DatePicker -->
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleTextView"
+        android:layout_marginTop="8dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner" />
 
     <Button
         android:id="@+id/updateButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Update"
-        android:layout_below="@+id/profilePhotoImageView"
+        android:layout_below="@+id/datePicker"
         android:layout_marginTop="16dp"/>
 </RelativeLayout>

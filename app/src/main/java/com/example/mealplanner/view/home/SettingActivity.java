@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -42,6 +43,7 @@ public class SettingActivity extends BaseActivity {
         setupHelpSettingButton();
         setupPrivacyPolicyButton();
         setupTermsServiceButton();
+
     }
 
 
@@ -88,15 +90,19 @@ public class SettingActivity extends BaseActivity {
 
 
 
-    private void setupCancelButton() {
+    private  void setupCancelButton(){
+        // Assuming you have a button in your layout with the ID "backButton"
+        ImageButton backButton = findViewById(R.id.cancelButton);
 
-        binding.cancelButton.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                redirectToHome();
+                // Call onBackPressed to simulate the back button press
+                onBackPressed();
             }
         });
     }
+
 
     private void setupLogoutButton() {
 
