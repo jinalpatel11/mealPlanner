@@ -70,7 +70,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icons8search24"
+            android:src="@drawable/icons8search30"
             android:layout_gravity="center_vertical"/>
 
         <!-- Search EditText -->
@@ -85,12 +85,13 @@
             android:layout_centerHorizontal="true"
             />
 
+
         <!-- Filter Button Icon -->
         <ImageView
             android:id="@+id/filterButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icons8filter50"
+            android:src="@drawable/icons8filter30"
             android:layout_gravity="center_vertical"/>
 
         <!-- Cancel ImageButton -->
@@ -116,5 +117,14 @@
         android:layout_below="@id/searchLayout"
         android:layout_marginTop="16dp"
        />
+
+    <androidx.recyclerview.widget.RecyclerView
+
+        android:id="@+id/recipeCardsRecyclerView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recipesTitleRecyclerView"
+        android:layout_marginTop="16dp"
+        />
 </RelativeLayout>
 

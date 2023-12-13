@@ -125,8 +125,6 @@ public class HomeActivity extends BaseActivity {
     private void setupUserInfo() {
 
             String userEmail =getUserEmailFromSession();
-            // Find the ImageView and TextView in your layout
-            ImageView profileImageView = findViewById(R.id.profileImageView);
 
 
             User user = userController.getUserByEmail(userEmail);
@@ -136,7 +134,7 @@ public class HomeActivity extends BaseActivity {
                 binding.profileImageView.setImageBitmap(bitmap);
 
                 // If available, set the ImageView with the image
-                profileImageView.setVisibility(View.VISIBLE);
+               binding.profileImageView.setVisibility(View.VISIBLE);
                 binding.emailTextView.setVisibility(View.GONE);
 
                 binding.profileImageView.setOnClickListener(view -> {
@@ -151,7 +149,7 @@ public class HomeActivity extends BaseActivity {
                 binding.emailTextView.setText(userInitial);
 
                 // If not available, show the TextView
-                profileImageView.setVisibility(View.GONE);
+                binding.profileImageView.setVisibility(View.GONE);
                 binding.emailTextView.setVisibility(View.VISIBLE);
 
                 binding.emailTextView.setOnClickListener(view -> {

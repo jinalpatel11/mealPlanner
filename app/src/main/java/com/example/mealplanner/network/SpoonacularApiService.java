@@ -1,5 +1,6 @@
 package com.example.mealplanner.network;
 
+import com.example.mealplanner.model.RecipeSearchComplexResponse;
 import com.example.mealplanner.model.meal.Recipe;
 import com.example.mealplanner.model.meal.RecipeDetails;
 import com.example.mealplanner.model.network.meal.ProductSearchResponse;
@@ -33,6 +34,13 @@ public interface SpoonacularApiService {
             @Query("apiKey") String apiKey,
             @Query("includeNutrition") Boolean includeNutrition
     );
+
+    @GET("/recipes/complexSearch")
+    Call<RecipeSearchComplexResponse> complexSearch(@Query("apiKey") String apiKey, @QueryMap Map<String, String> options);
+
+
+
+
 }
 
 

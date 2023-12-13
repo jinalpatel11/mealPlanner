@@ -8,6 +8,9 @@ import java.util.List;
 
 
 public class Recipe  implements Serializable {
+    public Recipe() {
+    }
+
     private int id;
     private String title;
     private String image;
