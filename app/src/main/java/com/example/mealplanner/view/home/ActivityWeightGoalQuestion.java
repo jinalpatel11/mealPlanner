@@ -12,8 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mealplanner.R;
 import com.example.mealplanner.model.User;
+import com.example.mealplanner.view.BaseActivity;
 
-public class ActivityWeightGoalQuestion extends AppCompatActivity {
+public class ActivityWeightGoalQuestion extends BaseActivity {
     private EditText edtTargetWeightValue;
     private Button btnTargetKg, btnTargetLb;
 
@@ -51,6 +52,15 @@ public class ActivityWeightGoalQuestion extends AppCompatActivity {
                 // Get the target weight value from the EditText
                 String targetWeightValue = edtTargetWeightValue.getText().toString();
 
+                // Validate the input
+                if (targetWeightValue.isEmpty() || !isValidWeight(targetWeightValue)) {
+                    // Show an error message
+                    edtTargetWeightValue.setError("Please enter a number between 1 and 1000");
+                    return;
+                }
+
+                // Clear any previous error messages
+                edtTargetWeightValue.setError(null);
 
                 Intent intent = getIntent();
                 if (intent != null) {

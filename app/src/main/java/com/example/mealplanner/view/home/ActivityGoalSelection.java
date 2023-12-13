@@ -36,12 +36,12 @@ public class ActivityGoalSelection extends AppCompatActivity {
 
         // In your activity or fragment
         List<GoalItem> goalItems = new ArrayList<>();
-        goalItems.add(new GoalItem(R.drawable.drink, "Goal1"));
-        goalItems.add(new GoalItem(R.drawable.drink, "Goal2"));
-        goalItems.add(new GoalItem(R.drawable.drink, "Goal3"));
-        goalItems.add(new GoalItem(R.drawable.drink, "Goal4"));
-        goalItems.add(new GoalItem(R.drawable.drink, "Goal5"));
-        goalItems.add(new GoalItem(R.drawable.drink, "Goal6"));
+        goalItems.add(new GoalItem(R.drawable.icons8fire50, "Lose Weight"));
+        goalItems.add(new GoalItem(R.drawable.icons8muscle50, "Build muscle"));
+        goalItems.add(new GoalItem(R.drawable.icons8energy50, "Increase energy"));
+        goalItems.add(new GoalItem(R.drawable.icons8moon50, "Improve sleep"));
+        goalItems.add(new GoalItem(R.drawable.icons8drop50, "Manage glucose"));
+        goalItems.add(new GoalItem(R.drawable.icons8pulse50, "Be healthier"));
 
         // Set up the adapter for the RecyclerView
         GoalAdapter recipesAdapter = new GoalAdapter(goalItems);

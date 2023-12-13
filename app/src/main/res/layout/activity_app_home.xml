@@ -43,8 +43,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description"
+                android:text="Elevate your nutrition and wellness journey with our cutting-edge Meal Planner app. Whether you're striving for fitness goals, weight management, or simply adopting a healthier lifestyle, we've got you covered."
                 android:lines="4"
+                android:textAlignment="center"
                 android:layout_marginTop="8dp"/>
 
         </LinearLayout>

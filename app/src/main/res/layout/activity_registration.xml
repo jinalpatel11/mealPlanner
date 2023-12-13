@@ -126,14 +126,16 @@
             android:text="Create My Account"
             android:layout_below="@+id/passwordInputLayout"/>
 
-        <TextView
-            android:id="@+id/textOR"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="---------OR---------"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/buttonRegister"
-            />
+
+
+        <!-- Horizontal separation line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_below="@+id/textOR"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"/>
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/googleSignInButton"

@@ -12,8 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mealplanner.R;
 import com.example.mealplanner.model.User;
+import com.example.mealplanner.view.BaseActivity;
 
-public class ActivityHeightQuestion extends AppCompatActivity {
+public class ActivityHeightQuestion extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +27,16 @@ public class ActivityHeightQuestion extends AppCompatActivity {
             public void onClick(View v) {
                 // Get the target weight value from the EditText
                 String heightValue = edtHeightValue.getText().toString();
+
+                // Validate the input
+                if (heightValue.isEmpty() || !isValidHeight(heightValue)) {
+                    // Show an error message
+                    edtHeightValue.setError("Please enter a number between 90 and 240");
+                    return;
+                }
+
+                // Clear any previous error messages
+                edtHeightValue.setError(null);
 
 
                 Intent intent = getIntent();

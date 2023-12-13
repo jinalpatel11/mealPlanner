@@ -13,11 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mealplanner.R;
 import com.example.mealplanner.model.GoalItem;
 import com.example.mealplanner.model.User;
+import com.example.mealplanner.view.BaseActivity;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class ActivityWeightQuestion extends AppCompatActivity {
+public class ActivityWeightQuestion extends BaseActivity {
 
     private EditText edtWeightValue;
     private Button btnKg, btnLb;
@@ -81,6 +82,19 @@ public class ActivityWeightQuestion extends AppCompatActivity {
             public void onClick(View v) {
                 // Get the weight value from the EditText
                 String weightValue = edtWeightValue.getText().toString();
+
+
+                // Validate the input
+                if (weightValue.isEmpty() || !isValidWeight(weightValue)) {
+                    // Show an error message
+                    edtWeightValue.setError("Please enter a number between 1 and 1000");
+                    return;
+                }
+
+                // Clear any previous error messages
+                edtWeightValue.setError(null);
+
+
 
                 // Create a User object or retrieve the existing one from your application logic
                 User user = new User();

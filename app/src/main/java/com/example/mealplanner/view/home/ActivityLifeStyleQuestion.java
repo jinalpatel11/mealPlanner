@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -27,7 +28,8 @@ public class ActivityLifeStyleQuestion extends AppCompatActivity {
         SeekBar activityLevelSlider = findViewById(R.id.activityLevelSlider);
         TextView sliderValueTextView = findViewById(R.id.sliderValueTextView);
         TextView activityLevelValueTextView = findViewById(R.id.activityLevelValueTextView);
-
+        TextView activityLevelDetailTextView = findViewById(R.id.activityLevelDetailTextView);
+        ImageView activityLevelImageView = findViewById(R.id.activityLevelImageView);
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,18 +75,31 @@ public class ActivityLifeStyleQuestion extends AppCompatActivity {
                 switch (progress) {
                     case 0:
                         activityLevelValueTextView.setText("Sedentary");
+                        activityLevelDetailTextView.setText("Desk job with little or no exercise.");
+                        activityLevelImageView.setImageResource(R.drawable.sedentary);
                         break;
                     case 1:
                         activityLevelValueTextView.setText("Lightly Active");
+                        activityLevelDetailTextView.setText("Work a job with light physical demands, or work a desk job and perform light exercise (at the level of a brisk walk) for 30 minutes per day, 3-5 times per week.");
+                        activityLevelImageView.setImageResource(R.drawable.lightly_active);
                         break;
                     case 2:
                         activityLevelValueTextView.setText("Moderately Active");
+                        activityLevelDetailTextView.setText("Work a moderately physically demanding job, such as constructon worker, or work a desk job and engage in moderate exercise for 1 hour per day, 3-5 times per week.");
+                        activityLevelImageView.setImageResource(R.drawable.moderatelyactive);
+
                         break;
                     case 3:
                         activityLevelValueTextView.setText("Very Active");
+                        activityLevelDetailTextView.setText("Work a consistently physically demanding job, such as agricultural worker, or work a desk job and engage in intense exercise for 1 hour per day, or moderate exercise for 2 hours per day, 5-7 times per week.");
+                        activityLevelImageView.setImageResource(R.drawable.veryactive);
+
                         break;
                     case 4:
                         activityLevelValueTextView.setText("Extra Active");
+                        activityLevelDetailTextView.setText("Work an extremely physically demanding job, such as professional athlete, competitive cyclist, or fitness professional, or engage in intense exercise for at least 2 hours per day.");
+                        activityLevelImageView.setImageResource(R.drawable.extraactive);
+
                         break;
                 }
             }

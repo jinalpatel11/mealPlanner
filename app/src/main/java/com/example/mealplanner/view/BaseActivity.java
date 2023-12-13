@@ -166,6 +166,27 @@ public class BaseActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+    // Helper method to check if the weight is a valid number between 1 and 1000
+    protected boolean isValidWeight(String weight) {
+        try {
+            double weightValue = Double.parseDouble(weight);
+            return weightValue >= 1.0 && weightValue <= 1000.0;
+        } catch (NumberFormatException e) {
+            return false; // Failed to parse as a double
+        }
+    }
+
+
+    // Helper method to check if the height is a valid number between 90 and 250
+    protected boolean isValidHeight(String height) {
+        try {
+            double weightValue = Double.parseDouble(height);
+            return weightValue >= 90.0 && weightValue <= 250.0;
+        } catch (NumberFormatException e) {
+            return false; // Failed to parse as a double
+        }
+    }
+
 
     private void showExitConfirmationDialog() {
         // Implement your logic to show a confirmation dialog

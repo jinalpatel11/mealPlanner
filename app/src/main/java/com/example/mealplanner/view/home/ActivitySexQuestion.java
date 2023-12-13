@@ -29,7 +29,7 @@ public class ActivitySexQuestion extends AppCompatActivity {
             public void onClick(View v) {
                 // Get the selected radio button's ID from the RadioGroup
                 int selectedRadioButtonId = sexRadioGroup.getCheckedRadioButtonId();
-Log.d("RadioButtonValue", String.valueOf(selectedRadioButtonId));
+                Log.d("RadioButtonValue", String.valueOf(selectedRadioButtonId));
                 // Check if a radio button is selected
                 if (selectedRadioButtonId != -1) {
 

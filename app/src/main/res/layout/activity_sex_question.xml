@@ -16,7 +16,23 @@
         android:background="@color/second">
 
         <!-- Cancel ImageButton -->
-        <!-- Add your cancel button here -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp">
+
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icons8cancel50"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="8dp"
+                android:layout_gravity="center_vertical"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                />
+        </RelativeLayout>
 
         <!-- Title -->
         <ImageView
@@ -24,10 +40,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/meal_planner_logos"
+            android:src="@drawable/noun_meal_749510"
             android:textAlignment="center"
             android:textSize="18sp" />
+
     </LinearLayout>
+
 
     <!-- Slider and Value in a Horizontal LinearLayout -->
     <LinearLayout
@@ -47,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:max="6"
-            android:progress="1"
+            android:progress="3"
             android:splitTrack="false"
             android:thumb="@drawable/slider_thumb"
             android:enabled="false" />
@@ -57,7 +75,7 @@
             android:id="@+id/sliderValueTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1/6"
+            android:text="3/6"
             android:textSize="16sp"
             android:textStyle="bold"
             android:padding="8dp"
