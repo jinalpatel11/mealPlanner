@@ -1,6 +1,8 @@
 package com.example.mealplanner.repositories;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.example.mealplanner.model.User;
 
@@ -33,5 +35,9 @@ public class UserRepository {
     public boolean updateUser(User updatedUser) {
         int rowsAffected = databaseHelper.updateUser(updatedUser);
         return rowsAffected > 0;
+    }
+
+    public boolean updateUserProfilePicture(String userEmail, byte[] photoData) {
+        return databaseHelper.updateUserProfilePicture(userEmail, photoData);
     }
 }

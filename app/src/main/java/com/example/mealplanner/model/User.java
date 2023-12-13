@@ -15,6 +15,7 @@ public class User  implements Parcelable {
     private String password;
     
     private String profilePhoto;
+    private byte[] photoData; // Add this field
     private String firstName;
     private  String lastName;
     private String birthday;
@@ -246,6 +247,17 @@ public class User  implements Parcelable {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+
+
+
+    public byte[] getPhotoData() {
+        return photoData;
+    }
+
+    public void setPhotoData(byte[] photoData) {
+        this.photoData = photoData;
     }
 }
 

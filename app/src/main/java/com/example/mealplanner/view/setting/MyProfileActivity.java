@@ -1,10 +1,16 @@
 package com.example.mealplanner.view.setting;
 
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,10 +18,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.mealplanner.R;
 import com.example.mealplanner.controller.UserController;
@@ -30,6 +39,7 @@ import com.example.mealplanner.view.auth.RegistrationActivity;
 import com.example.mealplanner.view.home.HomeActivity;
 import com.example.mealplanner.view.home.SettingActivity;
 
+import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -39,6 +49,11 @@ import java.util.Locale;
 public class MyProfileActivity extends BaseActivity {
 
     private ActivityMyProfileBinding binding;
+
+    private static final int REQUEST_IMAGE_CAPTURE = 101;
+
+    private static final int CAMERA_PERMISSION_REQUEST_CODE = 100;
+
 
     private  User user;
 
@@ -68,11 +83,67 @@ public class MyProfileActivity extends BaseActivity {
         setFieldClickListener(R.id.sexTextView);
 
         setFieldClickListener(R.id.birthdayTextView);
+
+        setFieldClickListener(R.id.profilePhotoTextView);
+
+
+        setFieldClickListener(R.id.activityLevelTextView);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            // Get the photo from the intent
+            Bundle extras = data.getExtras();
+            Bitmap photo = (Bitmap) extras.get("data");
+
+            // Update the user's profile picture using the captured photo
+            if (user != null) {
+                // Convert the Bitmap to a byte array (you may need to implement this conversion)
+                byte[] photoBytes = convertBitmapToByteArray(photo);
+
+                // Update the user's profile picture in the database
+                boolean isUpdateSuccessful = userController.updateUserProfilePicture(user.getEmail(), photoBytes);
+
+                if (isUpdateSuccessful) {
+                    // Update successful
+                    // Update the UI with the new user information, including the profile picture
+                    setupProfileData(user);
+                } else {
+                    // Update failed (handle accordingly)
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openCamera();
+            } else {
+                // Handle permission denied
+                Toast.makeText(this, "Camera permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 
     private void setupProfileData(User user) {
         if (user != null) {
             this.user = user;
+
+
+            // Set profile photo
+            if (user.getPhotoData() != null) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(user.getPhotoData(), 0, user.getPhotoData().length);
+                binding.profileImageView.setImageBitmap(bitmap);
+            } else {
+                // Handle null value for profile photo
+                binding.profileImageView.setImageResource(R.drawable.jinal_patel); // Replace with your default image resource
+            }
 
             // Set first name
             if (user.getFirstName() != null) {
@@ -159,6 +230,11 @@ public class MyProfileActivity extends BaseActivity {
                 }else if(fieldTextViewId == R.id.birthdayTextView)
                 {
                     showUpdateDateDialog();
+                }else if(fieldTextViewId == R.id.profilePhotoTextView)
+                {
+                    requestCameraPermission();
+                }else if (fieldTextViewId == R.id.activityLevelTextView){
+                    showUpActivityLevelDialog();
                 }
                 else
                 {
@@ -367,6 +443,134 @@ public class MyProfileActivity extends BaseActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         return dateFormat.format(new Date());
     }
+
+
+
+    private void requestCameraPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
+        } else {
+            openCamera();
+        }
+    }
+
+
+    private byte[] convertBitmapToByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
+    }
+
+
+    private void openCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    private void showUpActivityLevelDialog() {
+        // Create a dialog
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_update_activity_level);
+
+        // Find views in the dialog layout
+        SeekBar activityLevelSlider = dialog.findViewById(R.id.activityLevelSlider);
+        TextView activityLevelValueTextView = dialog.findViewById(R.id.activityLevelValueTextView);
+        Button updateButton = dialog.findViewById(R.id.updateButton);
+
+        // Set the initial value of the slider and text view based on the user's current activity level
+        int currentActivityLevel = getActivityLevelValue(user.getActivityLevel());
+        activityLevelSlider.setProgress(currentActivityLevel);
+        activityLevelValueTextView.setText(getActivityLevelText(currentActivityLevel));
+
+        // Set up a listener for changes in the slider value
+        activityLevelSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // Update the text view with the current activity level
+                activityLevelValueTextView.setText(getActivityLevelText(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // Not needed for this implementation
+            }
+        });
+
+        // Set up a listener for the update button
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle the update logic here
+                // Close the dialog after updating
+                int selectedActivityLevel = activityLevelSlider.getProgress();
+
+                // Update the user object
+                if (user != null) {
+                    user.setActivityLevel(getActivityLevelText(selectedActivityLevel));
+
+                    // Update the user in the database
+                    boolean isUpdateSuccessful = userController.updateUserModel(user);
+
+                    if (isUpdateSuccessful) {
+                        // Update successful
+                        // Update the UI with the new user information
+                        setupProfileData(user);
+                    } else {
+                        // Update failed (user with the specified email might not exist)
+                    }
+                }
+
+                dialog.dismiss();
+            }
+        });
+
+        // Show the dialog
+        dialog.show();
+    }
+
+    // Helper method to get the activity level text based on the slider progress
+    private String getActivityLevelText(int progress) {
+        switch (progress) {
+            case 0:
+                return "Sedentary";
+            case 1:
+                return "Lightly Active";
+            case 2:
+                return "Moderately Active";
+            case 3:
+                return "Very Active";
+            case 4:
+                return "Extremely Active";
+            default:
+                return "Unknown";
+        }
+    }
+
+    // Helper method to get the activity level value based on the text
+    private int getActivityLevelValue(String activityLevel) {
+        switch (activityLevel) {
+            case "Sedentary":
+                return 0;
+            case "Lightly Active":
+                return 1;
+            case "Moderately Active":
+                return 2;
+            case "Very Active":
+                return 3;
+            case "Extremely Active":
+                return 4;
+            default:
+                return 0; // Default to Sedentary if the activity level is unknown
+        }
+    }
+
 
 }
 

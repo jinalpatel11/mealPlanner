@@ -41,4 +41,20 @@ public class UserController {
         return userRepository.updateUser(user);
     }
 
+
+    public boolean updateUserProfilePicture(String userEmail, byte[] photoData) {
+        // Get the existing user from the repository
+        User user = userRepository.getUser(userEmail);
+
+        if (user != null) {
+            // Update the user's profile picture
+            user.setPhotoData(photoData);
+
+            // Update the user in the repository
+            return userRepository.updateUser(user);
+        }
+
+        return false; // User not found
+    }
+
 }

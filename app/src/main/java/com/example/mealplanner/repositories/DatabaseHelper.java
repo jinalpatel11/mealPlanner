@@ -5,13 +5,14 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.mealplanner.model.User;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "user_db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 6;
 
     // Table name and columns
     private static final String TABLE_USERS = "users";
@@ -19,6 +20,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_PASSWORD = "password";
 
     private static final String COLUMN_PROFILE_PHOTO = "profile_photo";
+
+    private static final String COLUMN_PHOTO_DATA = "photo_data"; // New column
+
     private static final String COLUMN_FIRST_NAME = "first_name";
     private static final String COLUMN_LAST_NAME = "last_name";
     private static final String COLUMN_BIRTHDAY = "birthday";
@@ -36,6 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_USERNAME + " TEXT," +
                     COLUMN_PASSWORD + " TEXT," +
                     COLUMN_PROFILE_PHOTO + " TEXT," +
+                    COLUMN_PHOTO_DATA + " BLOB," + // New column for storing photo data
                     COLUMN_FIRST_NAME + " TEXT," +
                     COLUMN_LAST_NAME + " TEXT," +
                     COLUMN_BIRTHDAY + " TEXT," +
@@ -79,6 +84,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 values.put(COLUMN_USERNAME, user.getUsername());
                 values.put(COLUMN_PASSWORD, user.getPassword());
                 values.put(COLUMN_PROFILE_PHOTO, user.getProfilePhoto());
+                values.put(COLUMN_PHOTO_DATA, user.getPhotoData());
                 values.put(COLUMN_FIRST_NAME, user.getFirstName());
                 values.put(COLUMN_LAST_NAME, user.getLastName());
                 values.put(COLUMN_BIRTHDAY, user.getBirthdate());
@@ -87,6 +93,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 values.put(COLUMN_ACTIVITY_LEVEL, user.getActivityLevel());
                 values.put(COLUMN_EMAIL, user.getEmail());
                 values.put(COLUMN_SEX, user.getSex());
+
                 long result = db.insert(TABLE_USERS, null, values);
                 return result;
             } else {
@@ -134,6 +141,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     case COLUMN_PROFILE_PHOTO:
                         user.setProfilePhoto(cursor.getString(i));
                         break;
+                    case COLUMN_PHOTO_DATA:
+                        byte[] photoData = cursor.getBlob(i);
+                        Log.d("getUser", "Photo Data Length: " + (photoData != null ? photoData.length : 0));
+                        user.setPhotoData(photoData);
+                        break;
                     case COLUMN_FIRST_NAME:
                         user.setFirstName(cursor.getString(i));
                         break;
@@ -169,6 +181,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return user;
     }
 
+
     // Method to check if the entered password is correct for a user
     public boolean isPasswordCorrect(String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -192,6 +205,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_USERNAME, updatedUser.getUsername());
         values.put(COLUMN_PASSWORD, updatedUser.getPassword());
         values.put(COLUMN_PROFILE_PHOTO, updatedUser.getProfilePhoto());
+        values.put(COLUMN_PHOTO_DATA, updatedUser.getPhotoData());
         values.put(COLUMN_FIRST_NAME, updatedUser.getFirstName());
         values.put(COLUMN_LAST_NAME, updatedUser.getLastName());
         values.put(COLUMN_BIRTHDAY, updatedUser.getBirthdate());
@@ -207,5 +221,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return rowsAffected;
+    }
+
+    public boolean updateUserProfilePicture(String userEmail, byte[] photoData) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.COLUMN_PHOTO_DATA, photoData);
+
+        int rowsAffected = db.update(DatabaseHelper.TABLE_USERS, values,
+                DatabaseHelper.COLUMN_EMAIL + "=?",
+                new String[]{userEmail});
+
+        db.close();
+
+        return rowsAffected > 0;
     }
 }
