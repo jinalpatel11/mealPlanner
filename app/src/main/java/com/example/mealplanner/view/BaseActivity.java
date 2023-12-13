@@ -10,22 +10,40 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
         import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mealplanner.controller.UserController;
+import com.example.mealplanner.databinding.ActivityHomeBinding;
+import com.example.mealplanner.repositories.UserRepository;
 import com.example.mealplanner.view.auth.LoginActivity;
 import com.example.mealplanner.view.home.HomeActivity;
+import com.example.mealplanner.view.home.SettingActivity;
+import com.example.mealplanner.view.setting.DeveloperDetailsActivity;
+import com.example.mealplanner.view.setting.HelpSettingActivity;
+import com.example.mealplanner.view.setting.MyProfileActivity;
+import com.example.mealplanner.view.setting.PrivacyPolicyActivity;
+import com.example.mealplanner.view.setting.TermsServiceActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 public class BaseActivity extends AppCompatActivity {
 
+
     private static final String PREFS_NAME = "MyPrefsFile";
     private static final String USER_EMAIL_KEY = "user_email";
+
+    protected UserController userController; // Accessible in subclasses
+
 
     private GoogleSignInClient googleSignInClient;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Initialize UserController with UserRepository
+        UserRepository userRepository = new UserRepository(getApplicationContext());
+        userController = new UserController(userRepository);
+
     }
 
     protected String getUserEmailFromSession() {
@@ -91,6 +109,47 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    protected void navigateToMyProfile() {
+
+        // Redirect to the MyProfile activity
+        Intent intent = new Intent(this, MyProfileActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    protected void navigateToDeveloperDetails() {
+        // Redirect to the Developer details activity
+        Intent intent = new Intent(this, DeveloperDetailsActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    protected void redirectToHome() {
+        // Redirect to HomeActivity
+        startActivity(new Intent(this, HomeActivity.class));
+        finish(); // Optional: finish the current activity
+    }
+
+    protected void navigateToPrivacyPolicy() {
+        // Redirect to the Developer details activity
+        Intent intent = new Intent(this, PrivacyPolicyActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    protected void navigateToHelpSetting() {
+        // Redirect to the Developer details activity
+        Intent intent = new Intent(this, HelpSettingActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    protected void navigateToTermsServic() {
+        // Redirect to the Developer details activity
+        Intent intent = new Intent(this, TermsServiceActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 
 
 }

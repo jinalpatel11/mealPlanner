@@ -33,5 +33,12 @@ public class UserController {
         return userRepository.isPasswordCorrect(email, password);
     }
 
+    public  User getUserByEmail(String email){
+        return userRepository.getUser(email);
+    }
+
+    public Boolean updateUserModel(User user){
+        return userRepository.updateUser(user);
+    }
 
 }

@@ -80,15 +80,18 @@ tools:context=".view.home.SettingActivity">
     android:paddingLeft="16dp">
 
     <!-- Text Initials -->
+
+
     <TextView
         android:id="@+id/initialsTextView"
+        android:text="I"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:gravity="center"
-        android:text="J"
         android:background="@drawable/rounded_button_background"
         android:textColor="@android:color/white"
-        android:textSize="20sp" />
+        android:textSize="20sp"/>
+
 
     <!-- Additional Information -->
     <LinearLayout
@@ -287,6 +290,7 @@ tools:context=".view.home.SettingActivity">
 
     <!-- Help & Support Button -->
     <LinearLayout
+        android:id="@+id/helpSupportButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -314,6 +318,7 @@ tools:context=".view.home.SettingActivity">
 
     <!-- Terms of Service Button -->
     <LinearLayout
+        android:id="@+id/termsServiceButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -341,6 +346,7 @@ tools:context=".view.home.SettingActivity">
 
     <!-- Privacy Policy Button -->
     <LinearLayout
+        android:id="@+id/privacyPolicyButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -371,7 +377,8 @@ tools:context=".view.home.SettingActivity">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:id="@+id/developerButton">
 
         <ImageView
             android:layout_width="24dp"

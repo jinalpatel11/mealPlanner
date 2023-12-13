@@ -176,4 +176,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return result;
     }
+
+
+    // Method to update a user in the database
+    public int updateUser(User updatedUser) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USERNAME, updatedUser.getUsername());
+        values.put(COLUMN_PASSWORD, updatedUser.getPassword());
+        values.put(COLUMN_PROFILE_PHOTO, updatedUser.getProfilePhoto());
+        values.put(COLUMN_FIRST_NAME, updatedUser.getFirstName());
+        values.put(COLUMN_LAST_NAME, updatedUser.getLastName());
+        values.put(COLUMN_BIRTHDAY, updatedUser.getBirthdate());
+        values.put(COLUMN_HEIGHT, updatedUser.getHeight());
+        values.put(COLUMN_WEIGHT, updatedUser.getWeight());
+        values.put(COLUMN_ACTIVITY_LEVEL, updatedUser.getActivityLevel());
+
+        int rowsAffected = db.update(TABLE_USERS, values,
+                COLUMN_EMAIL + "=?",
+                new String[]{updatedUser.getEmail()});
+
+        db.close();
+
+        return rowsAffected;
+    }
 }

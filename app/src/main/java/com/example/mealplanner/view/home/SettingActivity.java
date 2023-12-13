@@ -2,44 +2,95 @@ package com.example.mealplanner.view.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import com.example.mealplanner.R;
+import com.example.mealplanner.databinding.ActivityHomeBinding;
+import com.example.mealplanner.databinding.ActivitySettingBinding;
+import com.example.mealplanner.model.User;
+import com.example.mealplanner.view.BaseActivity;
 import com.example.mealplanner.view.auth.LoginActivity;
 import com.example.mealplanner.view.setting.MyProfileActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 
-public class SettingActivity extends AppCompatActivity {
+public class SettingActivity extends BaseActivity {
 
     private GoogleSignInClient googleSignInClient;
+
+    private ActivitySettingBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
+        binding = ActivitySettingBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
 
         setupCancelButton();
         setupLogoutButton();
         setupinitialsButton();
+
+        setUpHeaderInformation();
         //My Settings
         setupMyProfileButton();
+        setupDeveloperButton();
+        setupHelpSettingButton();
+        setupPrivacyPolicyButton();
+        setupTermsServiceButton();
     }
 
-    private void redirectToHome() {
-        // Redirect to HomeActivity
-        startActivity(new Intent(SettingActivity.this, HomeActivity.class));
-        finish(); // Optional: finish the current activity
+
+
+    private void setUpHeaderInformation() {
+        String email = getUserEmailFromSession();
+        Log.d("SettingActivity", "Email: " + email);
+
+        String initials = extractInitial(email);
+        Log.d("SettingActivity", "Initials: " + initials);
+        binding.initialsTextView.setText(initials);
+        binding.usernameTextView.setText(email);
+        User user = userController.getUserByEmail(email);
+        Log.d("SettingActivity", "User: " + user);
+
+        if (user != null) {
+            // Set Birthdate
+            Date birthDate = user.getBirthdateAsDate();
+            if (birthDate != null) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                String formattedDate = dateFormat.format(birthDate);
+                binding.birthYearTextView.setText(formattedDate);
+            } else {
+                binding.birthYearTextView.setText("N/A");
+            }
+
+            // Set Sex
+            String sex = user.getSex();
+            binding.sexTextView.setText(sex != null ? sex : "N/A");
+
+            // Set Height
+            String height = user.getHeight();
+            binding.heightTextView.setText(height != null ? height : "N/A");
+        } else {
+            // Handle the case where the user does not exist
+            Log.e("SettingActivity", "User is null");
+            binding.birthYearTextView.setText("N/A");
+            binding.sexTextView.setText("N/A");
+            binding.heightTextView.setText("N/A");
+        }
+
+        // Rest of the code
     }
+
+
 
     private void setupCancelButton() {
-        ImageButton cancelButton = findViewById(R.id.cancelButton);
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {
+        binding.cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 redirectToHome();
@@ -48,35 +99,19 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void setupLogoutButton() {
-        ImageButton logoutButton = findViewById(R.id.logoutButton);
 
-        logoutButton.setOnClickListener(new View.OnClickListener() {
+       binding.logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                signOut();
-                navigateToLogin();
+              logout();
             }
         });
     }
 
-    private void navigateToLogin() {
-        Intent loginIntent = new Intent(SettingActivity.this, LoginActivity.class);
-        startActivity(loginIntent);
-        finish();
-    }
-
-    private void signOut() {
-        googleSignInClient.signOut().addOnCompleteListener(this,
-                task -> {
-                    // Optional: Perform any additional sign-out actions
-                });
-    }
-
 
     private void setupinitialsButton() {
-        TextView initialsButton = findViewById(R.id.initialsTextView);
 
-        initialsButton.setOnClickListener(new View.OnClickListener() {
+      binding.initialsTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Redirect to MyProfileActivity
@@ -86,14 +121,63 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void setupMyProfileButton() {
-        LinearLayout myProfileButton = findViewById(R.id.myProfileButton);
 
-        myProfileButton.setOnClickListener(new View.OnClickListener() {
+       binding.myProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Redirect to MyProfileActivity
-                startActivity(new Intent(SettingActivity.this, MyProfileActivity.class));
+                navigateToMyProfile();
+              }
+        });
+    }
+
+    private void setupDeveloperButton() {
+
+        binding.developerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Redirect to MyProfileActivity
+                navigateToDeveloperDetails();
             }
         });
     }
+
+
+
+    private void setupHelpSettingButton() {
+
+        binding.helpSupportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Redirect to MyProfileActivity
+                navigateToHelpSetting();
+            }
+        });
+    }
+
+
+    private void setupPrivacyPolicyButton() {
+
+        binding.privacyPolicyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Redirect to MyProfileActivity
+                navigateToPrivacyPolicy();
+            }
+        });
+    }
+
+
+    private void setupTermsServiceButton() {
+
+        binding.termsServiceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Redirect to MyProfileActivity
+                navigateToTermsServic();
+            }
+        });
+    }
+
+
 }

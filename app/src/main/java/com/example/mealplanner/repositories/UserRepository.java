@@ -17,8 +17,8 @@ public class UserRepository {
         return databaseHelper.addUser(user);
     }
 
-    public User getUser(String username) {
-        return databaseHelper.getUser(username);
+    public User getUser(String email) {
+        return databaseHelper.getUser(email);
     }
 
     public boolean isUserEmailIdExist(String email) {
@@ -27,5 +27,11 @@ public class UserRepository {
 
     public boolean isPasswordCorrect(String email, String password) {
         return databaseHelper.isPasswordCorrect(email, password);
+    }
+
+    // Method to update a user in the database
+    public boolean updateUser(User updatedUser) {
+        int rowsAffected = databaseHelper.updateUser(updatedUser);
+        return rowsAffected > 0;
     }
 }

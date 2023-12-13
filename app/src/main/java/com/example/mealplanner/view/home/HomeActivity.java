@@ -56,8 +56,7 @@ public class HomeActivity extends BaseActivity {
         setupLogoutButton();
 
         setupViweAllButton();
-
-
+        
         // Set up click listener for Setting Button
         setupSettingButton();
 
@@ -204,5 +203,5 @@ public class HomeActivity extends BaseActivity {
         RecipesCardAdapter recipesCardAdapter = new RecipesCardAdapter(HomeActivity.this, recipes);
         recipeCardsRecyclerView.setAdapter(recipesCardAdapter);
     }
-    
+
 }

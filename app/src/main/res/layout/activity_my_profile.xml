@@ -211,7 +211,7 @@
                 android:id="@+id/heightLabelTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Birthday"
+                android:text="Height"
                 android:textSize="16sp" />
 
             <TextView

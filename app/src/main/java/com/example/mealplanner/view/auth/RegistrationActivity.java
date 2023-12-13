@@ -16,6 +16,7 @@ import com.example.mealplanner.controller.UserController;
 import com.example.mealplanner.databinding.ActivityRegistrationBinding;
 import com.example.mealplanner.model.User;
 import com.example.mealplanner.repositories.UserRepository;
+import com.example.mealplanner.view.BaseActivity;
 import com.example.mealplanner.view.home.ActivityBirthQuestion;
 import com.example.mealplanner.view.home.ActivityHeightQuestion;
 
@@ -25,8 +26,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
-public class RegistrationActivity extends AppCompatActivity {
-    private UserController userController;
+public class RegistrationActivity extends BaseActivity {
+
     private ActivityRegistrationBinding binding;
 
     @Override
@@ -34,11 +35,6 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityRegistrationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        // Initialize UserController with UserRepository
-        UserRepository userRepository = new UserRepository(getApplicationContext());
-
-        userController = new UserController(userRepository);
 
         // Set up UI components and event handlers
         binding.buttonRegister.setOnClickListener(new View.OnClickListener() {

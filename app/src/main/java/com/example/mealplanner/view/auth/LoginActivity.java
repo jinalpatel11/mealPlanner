@@ -172,12 +172,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
 
 
 
-    private void redirectToHome() {
-        Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
-        startActivity(homeIntent);
-        finish(); // Optional: finish the LoginActivity to prevent going back
-    }
-
     private void saveUserEmailInSession(String userEmail) {
         SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit();
         editor.putString(USER_EMAIL_KEY, userEmail);
