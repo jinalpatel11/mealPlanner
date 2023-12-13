@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -84,9 +85,9 @@ public class MyProfileActivity extends BaseActivity {
 
         setFieldClickListener(R.id.birthdayTextView);
 
-        setFieldClickListener(R.id.profilePhotoTextView);
+        setFieldClickListener(R.id.emailTextView);
 
-
+        setFieldClickListener(R.id.profileImageView);
         setFieldClickListener(R.id.activityLevelTextView);
     }
 
@@ -135,15 +136,8 @@ public class MyProfileActivity extends BaseActivity {
         if (user != null) {
             this.user = user;
 
+            setupUserInfo();
 
-            // Set profile photo
-            if (user.getPhotoData() != null) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(user.getPhotoData(), 0, user.getPhotoData().length);
-                binding.profileImageView.setImageBitmap(bitmap);
-            } else {
-                // Handle null value for profile photo
-                binding.profileImageView.setImageResource(R.drawable.jinal_patel); // Replace with your default image resource
-            }
 
             // Set first name
             if (user.getFirstName() != null) {
@@ -216,34 +210,75 @@ public class MyProfileActivity extends BaseActivity {
         finish();
     }
 
+    private void setupUserInfo() {
+
+        String userEmail =getUserEmailFromSession();
+        // Find the ImageView and TextView in your layout
+        ImageView profileImageView = findViewById(R.id.profileImageView);
+
+
+        User user = userController.getUserByEmail(userEmail);
+        if(user.getPhotoData().length != 0)
+        {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(user.getPhotoData(), 0, user.getPhotoData().length);
+            binding.profileImageView.setImageBitmap(bitmap);
+
+            // If available, set the ImageView with the image
+            profileImageView.setVisibility(View.VISIBLE);
+            binding.emailTextView.setVisibility(View.GONE);
+
+
+
+        }else
+        {
+            String userInitial = extractInitial(userEmail);
+            binding.emailTextView.setText(userInitial);
+
+            // If not available, show the TextView
+            profileImageView.setVisibility(View.GONE);
+            binding.emailTextView.setVisibility(View.VISIBLE);
+
+
+        }
+    }
 
     private void setFieldClickListener(int fieldTextViewId) {
+        View fieldView = findViewById(fieldTextViewId);
 
-
-        TextView fieldTextView = findViewById(fieldTextViewId);
-        fieldTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(fieldTextViewId == R.id.sexTextView)
-                {
-                    showUpdateSexDialog(fieldTextViewId);
-                }else if(fieldTextViewId == R.id.birthdayTextView)
-                {
-                    showUpdateDateDialog();
-                }else if(fieldTextViewId == R.id.profilePhotoTextView)
-                {
-                    requestCameraPermission();
-                }else if (fieldTextViewId == R.id.activityLevelTextView){
-                    showUpActivityLevelDialog();
+        if (fieldView instanceof TextView) {
+            TextView fieldTextView = (TextView) fieldView;
+            fieldTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Handle TextView click
+                    if (fieldTextViewId == R.id.sexTextView) {
+                        showUpdateSexDialog(fieldTextViewId);
+                    } else if (fieldTextViewId == R.id.birthdayTextView) {
+                        showUpdateDateDialog();
+                    }else if(fieldTextViewId == R.id.activityLevelTextView){
+                        showUpActivityLevelDialog();
+                    }
+                    else {
+                        showUpdateFieldDialog(fieldTextViewId);
+                    }
                 }
-                else
-                {
-                    showUpdateFieldDialog(fieldTextViewId);
+            });
+        } else if (fieldView instanceof ImageView) {
+            ImageView fieldImageView = (ImageView) fieldView;
+            fieldImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Handle ImageView click
+                    if (fieldTextViewId == R.id.profileImageView) {
+                        requestCameraPermission();
+                    } else {
+                        // Handle other ImageView clicks
+                    }
                 }
-
-
-            }
-        });
+            });
+        } else {
+            // Handle other view types if needed
+        }
     }
 
     private void showUpdateFieldDialog(int fieldTextViewId) {

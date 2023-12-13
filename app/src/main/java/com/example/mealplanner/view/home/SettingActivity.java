@@ -1,10 +1,13 @@
 package com.example.mealplanner.view.home;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,8 +37,7 @@ public class SettingActivity extends BaseActivity {
 
         setupCancelButton();
         setupLogoutButton();
-        setupinitialsButton();
-
+        setupUserInfo();
         setUpHeaderInformation();
         //My Settings
         setupMyProfileButton();
@@ -52,9 +54,6 @@ public class SettingActivity extends BaseActivity {
         String email = getUserEmailFromSession();
         Log.d("SettingActivity", "Email: " + email);
 
-        String initials = extractInitial(email);
-        Log.d("SettingActivity", "Initials: " + initials);
-        binding.initialsTextView.setText(initials);
         binding.usernameTextView.setText(email);
         User user = userController.getUserByEmail(email);
         Log.d("SettingActivity", "User: " + user);
@@ -115,16 +114,7 @@ public class SettingActivity extends BaseActivity {
     }
 
 
-    private void setupinitialsButton() {
 
-      binding.initialsTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Redirect to MyProfileActivity
-                startActivity(new Intent(SettingActivity.this, MyProfileActivity.class));
-            }
-        });
-    }
 
     private void setupMyProfileButton() {
 
@@ -184,6 +174,48 @@ public class SettingActivity extends BaseActivity {
             }
         });
     }
+
+    private void setupUserInfo() {
+
+        String userEmail =getUserEmailFromSession();
+        // Find the ImageView and TextView in your layout
+        ImageView profileImageView = findViewById(R.id.profileImageView);
+
+
+        User user = userController.getUserByEmail(userEmail);
+        if(user.getPhotoData().length != 0)
+        {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(user.getPhotoData(), 0, user.getPhotoData().length);
+            binding.profileImageView.setImageBitmap(bitmap);
+
+            // If available, set the ImageView with the image
+            profileImageView.setVisibility(View.VISIBLE);
+            binding.emailTextView.setVisibility(View.GONE);
+
+            binding.profileImageView.setOnClickListener(view -> {
+                // Navigate to the SettingActivity and finish the current activity
+                Intent intent = new Intent(this, MyProfileActivity.class);
+                startActivity(intent);
+            });
+
+        }else
+        {
+            String userInitial = extractInitial(userEmail);
+            binding.emailTextView.setText(userInitial);
+
+            // If not available, show the TextView
+            profileImageView.setVisibility(View.GONE);
+            binding.emailTextView.setVisibility(View.VISIBLE);
+
+            binding.emailTextView.setOnClickListener(view -> {
+                // Navigate to the SettingActivity and finish the current activity
+                Intent intent = new Intent(this, MyProfileActivity.class);
+                startActivity(intent);
+            });
+
+        }
+    }
+
 
 
 }

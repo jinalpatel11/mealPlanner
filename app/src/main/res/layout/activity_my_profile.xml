@@ -94,19 +94,31 @@
                 android:text="Profile Photo"
                 android:textSize="16sp" />
 
-<ImageView
-    android:id="@+id/profileImageView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    />
-            <TextView
-                android:id="@+id/profilePhotoTextView"
-                android:layout_width="0dp"
+            <!-- Conditionally show either the ImageView or TextView -->
+            <FrameLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Value"
-                android:textAlignment="textEnd"
-                android:textSize="16sp" />
+                android:layout_marginLeft="10dp">
+
+                <!-- Email TextView -->
+                <TextView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:id="@+id/emailTextView"
+                    android:text="j"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:background="@drawable/rounded_button_background"/>
+
+                <!-- ImageView for profile image -->
+                <ImageView
+                    android:id="@+id/profileImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/> <!-- Initially set visibility to gone -->
+
+            </FrameLayout>
+
         </LinearLayout>
 
         <!-- First Name -->

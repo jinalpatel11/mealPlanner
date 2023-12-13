@@ -1,11 +1,14 @@
 package com.example.mealplanner.view.home;
 // HomeActivity.java
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealplanner.R;
 import com.example.mealplanner.databinding.ActivityHomeBinding;
+import com.example.mealplanner.model.User;
 import com.example.mealplanner.model.meal.Recipe;
 import com.example.mealplanner.model.RecipeItem;
 import com.example.mealplanner.network.ApiClient;
@@ -58,10 +62,6 @@ public class HomeActivity extends BaseActivity {
         setupLogoutButton();
 
         setupViweAllButton();
-        
-        // Set up click listener for Setting Button
-        setupSettingButton();
-
 
         // Recipes RecyclerView
         RecyclerView recipesRecyclerView = findViewById(R.id.recipesRecyclerView);
@@ -125,20 +125,45 @@ public class HomeActivity extends BaseActivity {
     private void setupUserInfo() {
 
             String userEmail =getUserEmailFromSession();
-            String userInitial = extractInitial(userEmail);
-            binding.emailTextView.setText(userInitial);
+            // Find the ImageView and TextView in your layout
+            ImageView profileImageView = findViewById(R.id.profileImageView);
 
+
+            User user = userController.getUserByEmail(userEmail);
+            if(user.getPhotoData().length != 0)
+            {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(user.getPhotoData(), 0, user.getPhotoData().length);
+                binding.profileImageView.setImageBitmap(bitmap);
+
+                // If available, set the ImageView with the image
+                profileImageView.setVisibility(View.VISIBLE);
+                binding.emailTextView.setVisibility(View.GONE);
+
+                binding.profileImageView.setOnClickListener(view -> {
+                    // Navigate to the SettingActivity and finish the current activity
+                    Intent settingIntent = new Intent(HomeActivity.this, SettingActivity.class);
+                    startActivity(settingIntent);
+                });
+
+            }else
+            {
+                String userInitial = extractInitial(userEmail);
+                binding.emailTextView.setText(userInitial);
+
+                // If not available, show the TextView
+                profileImageView.setVisibility(View.GONE);
+                binding.emailTextView.setVisibility(View.VISIBLE);
+
+                binding.emailTextView.setOnClickListener(view -> {
+                    // Navigate to the SettingActivity and finish the current activity
+                    Intent settingIntent = new Intent(HomeActivity.this, SettingActivity.class);
+                    startActivity(settingIntent);
+                });
+
+            }
     }
 
 
-    private void setupSettingButton() {
-        binding.emailTextView.setOnClickListener(view -> {
-            // Navigate to the SettingActivity and finish the current activity
-            Intent settingIntent = new Intent(HomeActivity.this, SettingActivity.class);
-            startActivity(settingIntent);
-        });
-
-    }
 
     private void setupLogoutButton() {
         binding.logoutButton.setOnClickListener(view -> {

@@ -37,32 +37,52 @@
         android:layout_below="@+id/textWelcome"
         />
 
-    <EditText
-        android:id="@+id/editTextEmail"
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
         android:layout_marginBottom="16dp"
-        android:layout_below="@+id/textPleaseSign"/>
+        android:layout_below="@+id/textPleaseSign">
 
-    <EditText
-        android:id="@+id/editTextPassword"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/icons8mail30"
+            android:drawablePadding="8dp"
+            android:inputType="text"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
         android:hint="Password"
-        android:layout_below="@+id/editTextEmail"
-        android:layout_marginBottom="16dp"/>
+        android:layout_below="@+id/emailInputLayout"
+        android:layout_marginBottom="16dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/icons8password30"
+            android:drawablePadding="8dp"
+            android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/forgotPassword"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Forgot your password?"
         android:textSize="14dp"
         android:textStyle="bold"
-        android:layout_below="@+id/editTextPassword"
+        android:layout_below="@+id/passwordInputLayout"
         android:textColor="@color/primary"
+        android:textAlignment="textEnd"
         />
 
     <Button
@@ -77,17 +97,19 @@
         android:background="@drawable/rounded_button_background" />
 
 
-    <TextView
+    <!-- Horizontal separation line -->
+    <View
         android:id="@+id/textOR"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="---------OR---------"
-        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
         android:layout_below="@+id/buttonSignIn"
-        />
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
 
 
-        <com.google.android.gms.common.SignInButton
+
+    <com.google.android.gms.common.SignInButton
             android:id="@+id/googleSignInButton"
             android:layout_width="match_parent"
             android:layout_below="@+id/textOR"
@@ -98,11 +120,12 @@
 
     <TextView
         android:id="@+id/dontHaveAccount"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Don't have an account ?"
         android:layout_below="@+id/googleSignInButton"
         android:textSize="14dp"
+        android:textAlignment="center"
         />
     <!-- New Button for Registration -->
     <TextView
@@ -113,7 +136,8 @@
         android:textColor="@color/primary"
         android:layout_below="@+id/dontHaveAccount"
         android:textSize="14dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textAlignment="center"/>
 
     <TextView
         android:layout_width="wrap_content"

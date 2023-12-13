@@ -16,16 +16,30 @@
         android:paddingTop="10dp"
         android:background="@color/second">
 
-        <!-- Email TextView -->
-        <TextView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:id="@+id/emailTextView"
-            android:text="j"
-            android:textAlignment="center"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/white"
-            android:background="@drawable/rounded_button_background"/>
+        <!-- Conditionally show either the ImageView or TextView -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp">
+
+            <!-- Email TextView -->
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/emailTextView"
+                android:text="j"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_button_background"/>
+
+            <!-- ImageView for profile image -->
+            <ImageView
+                android:id="@+id/profileImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/> <!-- Initially set visibility to gone -->
+
+        </FrameLayout>
 
         <!-- Title -->
         <TextView
@@ -53,9 +67,8 @@
                 android:layout_gravity="center_vertical"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-            />
+                />
         </RelativeLayout>
-
     </LinearLayout>
 
     <!-- Scrolling Content Area -->
