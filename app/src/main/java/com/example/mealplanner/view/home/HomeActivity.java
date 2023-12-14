@@ -6,12 +6,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,15 +19,11 @@ import com.example.mealplanner.model.RecipeItem;
 import com.example.mealplanner.network.ApiClient;
 import com.example.mealplanner.network.SpoonacularApiService;
 import com.example.mealplanner.view.BaseActivity;
-import com.example.mealplanner.view.auth.LoginActivity;
-import com.example.mealplanner.view.meal.MealListActivity;
 import com.example.mealplanner.view.meal.RecipesAdapter;
 import com.example.mealplanner.view.meal.RecipesCardAdapter;
 
 import com.example.mealplanner.view.meal.ViewAllRecipesActivity;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -23,7 +23,6 @@ import com.example.mealplanner.model.RecipeItem;
 import com.example.mealplanner.model.RecipeItemComplexSearch;
 import com.example.mealplanner.model.RecipeSearchComplexResponse;
 import com.example.mealplanner.model.meal.Recipe;
-import com.example.mealplanner.model.network.meal.ProductSearchResponse;
 import com.example.mealplanner.network.ApiClient;
 import com.example.mealplanner.network.SpoonacularApiService;
 import com.example.mealplanner.view.home.HomeActivity;

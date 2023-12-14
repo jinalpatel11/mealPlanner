@@ -36,7 +36,6 @@ public class SettingActivity extends BaseActivity {
 
 
         setupCancelButton();
-        setupLogoutButton();
         setupUserInfo();
         setUpHeaderInformation();
         //My Settings
@@ -103,15 +102,7 @@ public class SettingActivity extends BaseActivity {
     }
 
 
-    private void setupLogoutButton() {
 
-       binding.logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              logout();
-            }
-        });
-    }
 
 
 

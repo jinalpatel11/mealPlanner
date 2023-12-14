@@ -46,25 +46,6 @@ tools:context=".view.home.SettingActivity">
         android:textAlignment="center"
         android:textSize="18sp" />
 
-    <!-- Logout Button -->
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp">
-
-        <ImageButton
-            android:id="@+id/logoutButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icons8logout50"
-            android:background="?android:attr/selectableItemBackground"
-            android:padding="8dp"
-            android:layout_gravity="center_vertical"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            />
-    </RelativeLayout>
-
 </LinearLayout>
 
 

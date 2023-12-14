@@ -3,7 +3,6 @@ package com.example.mealplanner.network;
 import com.example.mealplanner.model.RecipeSearchComplexResponse;
 import com.example.mealplanner.model.meal.Recipe;
 import com.example.mealplanner.model.meal.RecipeDetails;
-import com.example.mealplanner.model.network.meal.ProductSearchResponse;
 
 import java.util.List;
 import java.util.Map;
@@ -16,8 +15,6 @@ import retrofit2.http.QueryMap;
 import retrofit2.http.Query;
 
 public interface SpoonacularApiService {
-    @GET("/food/products/search")
-    Call<ProductSearchResponse> searchProducts(@Query("apiKey") String apiKey, @QueryMap Map<String, String> options);
 
 
     @GET("/recipes/findByIngredients")
