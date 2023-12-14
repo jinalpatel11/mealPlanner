@@ -7,9 +7,6 @@
     android:padding="0dp"
     tools:context=".view.auth.LoginActivity">
 
-
-
-    <!-- Header -->
     <!-- Header -->
     <LinearLayout
         android:id="@+id/headerLayout"
@@ -118,13 +115,92 @@
         android:layout_marginTop="16dp"
        />
 
-    <androidx.recyclerview.widget.RecyclerView
 
-        android:id="@+id/recipeCardsRecyclerView1"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/recipesTitleRecyclerView"
+        android:layout_above="@+id/mealListButton">
+
+        <!-- Content below the searchLayout -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <!-- Your additional content goes here -->
+
+            <TextView
+                android:id="@+id/titleTextView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Newest Premium Recipes"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+
+                android:id="@+id/recipeCardsRecyclerView1"
+                android:layout_below="@id/titleTextView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="16dp"
+                />
+
+            <TextView
+                android:id="@+id/titleTextView2"
+                android:layout_below="@+id/recipeCardsRecyclerView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Newest Premium Recipes"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+
+                android:id="@+id/recipeCardsRecyclerView2"
+                android:layout_below="@id/titleTextView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="16dp"
+                />
+
+
+            <TextView
+                android:id="@+id/titleTextView3"
+                android:layout_below="@+id/recipeCardsRecyclerView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Newest Premium Recipes"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+
+                android:id="@+id/recipeCardsRecyclerView3"
+                android:layout_below="@id/titleTextView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="16dp"
+                />
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+    <!-- Footer -->
+
+
+    <Button
+        android:id="@+id/mealListButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/recipesTitleRecyclerView"
+        android:text="mealList"
         android:layout_marginTop="16dp"
-        />
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"/>
 </RelativeLayout>
 

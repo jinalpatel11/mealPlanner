@@ -27,6 +27,12 @@ public class RecipesCardAdapter extends RecyclerView.Adapter<RecipesCardAdapter.
         this.recipes = recipes;
     }
 
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
+        notifyDataSetChanged();
+    }
+
+
 
     @NonNull
     @Override

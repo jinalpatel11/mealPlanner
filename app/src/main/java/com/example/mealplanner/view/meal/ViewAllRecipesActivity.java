@@ -74,7 +74,7 @@ public class ViewAllRecipesActivity extends AppCompatActivity  implements Recipe
 
 
         // Set up the adapter for the RecyclerView
-       RecipeTitleAdapter recipesAdapter = new RecipeTitleAdapter(recipeTitles, this);
+        RecipeTitleAdapter recipesAdapter = new RecipeTitleAdapter(recipeTitles, this);
 
         recipesRecyclerView.setAdapter(recipesAdapter);
 
@@ -112,6 +112,9 @@ public class ViewAllRecipesActivity extends AppCompatActivity  implements Recipe
             }
         });
 
+
+
+
     }
 
     private ActivityViewAllRecipesBinding binding;
@@ -120,22 +123,28 @@ public class ViewAllRecipesActivity extends AppCompatActivity  implements Recipe
 
     @Override
     public void onRecipeTitleClicked(String title) {
-        // Handle the click event for the recipe title
-        // Call your API here using the clicked title
-        // Example: makeApiCall(title);
+
 
         Toast.makeText(this, title, Toast.LENGTH_SHORT).show();
         // RecipeCard RecyclerView1
-
-
             LinearLayoutManager cardLayoutManager1 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-          binding.recipeCardsRecyclerView1.setLayoutManager(cardLayoutManager1);
-            fetchRecipesByIngredients(binding.recipeCardsRecyclerView1, title);
+            binding.recipeCardsRecyclerView1.setLayoutManager(cardLayoutManager1);
+            fetchRecipesByIngredients(binding.recipeCardsRecyclerView1, title,0);
 
+
+        // RecipeCard RecyclerView2
+        LinearLayoutManager cardLayoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        binding.recipeCardsRecyclerView2.setLayoutManager(cardLayoutManager2);
+        fetchRecipesByIngredients(binding.recipeCardsRecyclerView2, title,1);
+
+        // RecipeCard RecyclerView3
+        LinearLayoutManager cardLayoutManager3 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        binding.recipeCardsRecyclerView3.setLayoutManager(cardLayoutManager3);
+        fetchRecipesByIngredients(binding.recipeCardsRecyclerView3, title,2);
 
     }
 
-    private void fetchRecipesByIngredients(RecyclerView recipeCardsRecyclerView1 ,String title) {
+    private void fetchRecipesByIngredients(RecyclerView recipeCardsRecyclerView1 ,String title,int offSet) {
         // Call the API to get recipes by ingredients
         String apiKey  = getResources().getString(R.string.api_key);
         // Assuming you have the Retrofit instance and SpoonacularApiService set up
@@ -143,7 +152,7 @@ public class ViewAllRecipesActivity extends AppCompatActivity  implements Recipe
         // Create a map for additional query parameters
         Map<String, String> options = new HashMap<>();
         options.put("query", title);
-
+        options.put("offset", String.valueOf(offSet));
         // Create a Call object using the complexSearch method
         Call<RecipeSearchComplexResponse> call = apiService.complexSearch(
                 apiKey,
@@ -184,8 +193,6 @@ public class ViewAllRecipesActivity extends AppCompatActivity  implements Recipe
             }
         });
     }
-
-
 
 
     private void updateRecipesCardAdapter(RecipeSearchComplexResponse recipes, RecyclerView recipeCardsRecyclerView) {

@@ -16,6 +16,7 @@ public class RecipeTitleAdapter extends RecyclerView.Adapter<RecipeTitleAdapter.
 
     private List<String> recipeItems;
     private RecipeTitleClickListener clickListener;
+    private int selectedPosition = RecyclerView.NO_POSITION;
 
 
     public RecipeTitleAdapter(List<String> recipeItems, RecipeTitleClickListener clickListener) {
@@ -36,13 +37,31 @@ public class RecipeTitleAdapter extends RecyclerView.Adapter<RecipeTitleAdapter.
         String recipeItem = recipeItems.get(position);
         holder.recipeItemTextView.setText(recipeItem);
 
+
+
+        // Set the background color based on the selected position
+        if (selectedPosition == position) {
+            // Change the background color for the selected item
+            holder.itemView.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.second));
+        } else {
+            // Reset the background color for non-selected items
+            holder.itemView.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.primary));
+        }
+
         // Set click listener or other properties as needed for the item
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // Update the selected position
+                notifyItemChanged(selectedPosition);
+                selectedPosition = holder.getAdapterPosition();
+                notifyItemChanged(selectedPosition);
+
                 if (clickListener != null) {
                     clickListener.onRecipeTitleClicked(recipeItem);
                 }
+
             }
         });
     }
