@@ -17,8 +17,12 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVi
 
     private List<RecipeItem> recipeItems;
 
-    public RecipesAdapter(List<RecipeItem> recipeItems) {
+
+    private RecipeClickListener clickListener;
+
+    public RecipesAdapter(List<RecipeItem> recipeItems,RecipeClickListener clickListener) {
         this.recipeItems = recipeItems;
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -39,6 +43,10 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVi
             @Override
             public void onClick(View view) {
                 // Handle item click
+                if (clickListener != null) {
+                    // Pass the category to the click listener
+                    clickListener.onRecipeClicked(recipeItem.getText());
+                }
             }
         });
     }
@@ -57,5 +65,9 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVi
             recipeItemImageView = itemView.findViewById(R.id.recipeItemImageView);
             recipeItemTextView = itemView.findViewById(R.id.recipeItemTextView);
         }
+    }
+
+    public interface RecipeClickListener {
+        void onRecipeClicked(String category);
     }
 }

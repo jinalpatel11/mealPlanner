@@ -39,6 +39,16 @@ import retrofit2.Response;
 
 public class ViewAllRecipesActivity extends AppCompatActivity  implements RecipeTitleAdapter.RecipeTitleClickListener{
 
+
+    private  String selectedCategory;
+
+    private ActivityViewAllRecipesBinding binding;
+
+    private SpoonacularApiService apiService;
+
+    private RecipeTitleAdapter recipesAdapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -49,6 +59,9 @@ public class ViewAllRecipesActivity extends AppCompatActivity  implements Recipe
         // Initialize Retrofit service
         apiService = ApiClient.getClient().create(SpoonacularApiService.class);
 
+        // Retrieve the selected category from the intent
+        selectedCategory = getIntent().getStringExtra("category");
+
 
         // Recipes RecyclerView
         RecyclerView recipesRecyclerView = findViewById(R.id.recipesTitleRecyclerView);
@@ -57,31 +70,57 @@ public class ViewAllRecipesActivity extends AppCompatActivity  implements Recipe
 
         // Create a list of static recipe titles
         List<String> recipeTitles = new ArrayList<>();
-        recipeTitles.add("All Premium Recipes");
-        recipeTitles.add("Quick & Easy Recipes");
-        recipeTitles.add("Main Courses");
-        recipeTitles.add("Breakfasts");
+        recipeTitles.add("Quick & Easy");
+        recipeTitles.add("Breakfast and Brunch");
         recipeTitles.add("Lunch");
-        recipeTitles.add("Beverages");
-        recipeTitles.add("Salads");
+        recipeTitles.add("Main Course");
+        recipeTitles.add("Beverage");
+        recipeTitles.add("Salad");
         recipeTitles.add("Snacks");
-        recipeTitles.add("Desserts");
-        recipeTitles.add("Sides");
+        recipeTitles.add("Dessert");
+        recipeTitles.add("Side Course");
         recipeTitles.add("Vegetarian");
         recipeTitles.add("Paleo");
         recipeTitles.add("Gluten Free");
         recipeTitles.add("Fasting Friendly");
 
-
         // Set up the adapter for the RecyclerView
-        RecipeTitleAdapter recipesAdapter = new RecipeTitleAdapter(recipeTitles, this);
-
+        recipesAdapter = new RecipeTitleAdapter(recipeTitles, this);
         recipesRecyclerView.setAdapter(recipesAdapter);
+
+        // Auto-select the item based on the category
+        autoSelectCategory();
+
+
 
         EditText edtSearchRecipes = findViewById(R.id.edtSearchRecipes);
         ImageButton cancelButton = findViewById(R.id.cancelButton);
 
-        
+
+        setupCancelButton();
+
+        // Set up the click listener for the search button
+       binding.searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Call the method to fetch recipes based on the search query
+                String searchQuery = edtSearchRecipes.getText().toString();
+                if (!searchQuery.isEmpty()) {
+                    Toast.makeText(ViewAllRecipesActivity.this, searchQuery, Toast.LENGTH_SHORT).show();
+
+                    fetchRecipesByIngredients(binding.recipeCardsRecyclerView1,searchQuery,0);
+                    fetchRecipesByIngredients(binding.recipeCardsRecyclerView2,searchQuery,1);
+
+                    fetchRecipesByIngredients(binding.recipeCardsRecyclerView3,searchQuery,2);
+
+                } else {
+                    // Handle the case where the search query is empty
+                    Toast.makeText(ViewAllRecipesActivity.this, "Please enter a search query", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,17 +152,23 @@ public class ViewAllRecipesActivity extends AppCompatActivity  implements Recipe
         });
 
 
-
-
     }
 
-    private ActivityViewAllRecipesBinding binding;
+    private void autoSelectCategory() {
+        if (selectedCategory == null) {
+         selectedCategory = "Quick & Easy";
+        }
 
-    private SpoonacularApiService apiService;
+        int selectedIndex = recipesAdapter.getPositionForCategory(selectedCategory);
+        if (selectedIndex != -1) {
+            recipesAdapter.setSelectedIndex(selectedIndex);
+            onRecipeTitleClicked(selectedCategory);
+        }
+    }
+
 
     @Override
     public void onRecipeTitleClicked(String title) {
-
 
         Toast.makeText(this, title, Toast.LENGTH_SHORT).show();
         // RecipeCard RecyclerView1
@@ -230,6 +275,18 @@ public class ViewAllRecipesActivity extends AppCompatActivity  implements Recipe
     }
 
 
+    private  void setupCancelButton(){
+        // Assuming you have a button in your layout with the ID "backButton"
+        ImageButton backButton = findViewById(R.id.backButton);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Call onBackPressed to simulate the back button press
+                onBackPressed();
+            }
+        });
+    }
 
 
 }

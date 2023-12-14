@@ -65,6 +65,7 @@
 
         <!-- Search Icon -->
         <ImageView
+            android:id="@+id/searchButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/icons8search30"
@@ -83,20 +84,13 @@
             />
 
 
-        <!-- Filter Button Icon -->
-        <ImageView
-            android:id="@+id/filterButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icons8filter30"
-            android:layout_gravity="center_vertical"/>
 
         <!-- Cancel ImageButton -->
         <ImageButton
             android:id="@+id/cancelButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icons8cancel50"
+            android:src="@drawable/icons8cancel30"
             android:background="?android:attr/selectableItemBackground"
             android:padding="8dp"
             android:layout_gravity="center_vertical"
@@ -117,10 +111,12 @@
 
 
     <ScrollView
+        android:id="@+id/defaultScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/recipesTitleRecyclerView"
-        android:layout_above="@+id/mealListButton">
+
+        android:visibility="visible">
 
         <!-- Content below the searchLayout -->
         <RelativeLayout
@@ -189,18 +185,21 @@
 
     </ScrollView>
 
-
-    <!-- Footer -->
-
-
-    <Button
-        android:id="@+id/mealListButton"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/searchScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="mealList"
-        android:layout_marginTop="16dp"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:layout_marginBottom="16dp"/>
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <!-- Search results content goes here -->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recipeCardsRecyclerView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"/>
+
+    </androidx.core.widget.NestedScrollView>
+
 </RelativeLayout>
 

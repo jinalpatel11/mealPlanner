@@ -4,7 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -57,7 +57,7 @@ public class RecipeTitleAdapter extends RecyclerView.Adapter<RecipeTitleAdapter.
                 notifyItemChanged(selectedPosition);
                 selectedPosition = holder.getAdapterPosition();
                 notifyItemChanged(selectedPosition);
-
+                Log.d("selectedPosition", String.valueOf(selectedPosition));
                 if (clickListener != null) {
                     clickListener.onRecipeTitleClicked(recipeItem);
                 }
@@ -82,9 +82,27 @@ public class RecipeTitleAdapter extends RecyclerView.Adapter<RecipeTitleAdapter.
 
 
     }
+
+
     public interface RecipeTitleClickListener {
 
         void onRecipeTitleClicked(String title);
+    }
+
+    public void setSelectedIndex(int index) {
+        selectedPosition = index;
+        Log.d("selectedPosition", String.valueOf(selectedPosition));
+        notifyDataSetChanged();
+    }
+
+    public int getPositionForCategory(String category) {
+        for (int i = 0; i < recipeItems.size(); i++) {
+            if (recipeItems.get(i).equals(category)) {
+
+                return i;
+            }
+        }
+        return -1;
     }
 }
 

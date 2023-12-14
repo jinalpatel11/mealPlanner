@@ -70,30 +70,40 @@ public class HomeActivity extends BaseActivity {
 
         // In your activity or fragment
         List<RecipeItem> recipeItems = new ArrayList<>();
-        recipeItems.add(new RecipeItem(R.drawable.drink, "Quick & Easy"));
-        recipeItems.add(new RecipeItem(R.drawable.drink, "Breakfast and Brunch"));
-        recipeItems.add(new RecipeItem(R.drawable.drink, "Lunch"));
-        recipeItems.add(new RecipeItem(R.drawable.drink, "Main Course"));
-        recipeItems.add(new RecipeItem(R.drawable.drink, "Beverage"));
-        recipeItems.add(new RecipeItem(R.drawable.drink, "Salad"));
-        recipeItems.add(new RecipeItem(R.drawable.drink, "Snack"));
-        recipeItems.add(new RecipeItem(R.drawable.drink, "Dessert"));
-        recipeItems.add(new RecipeItem(R.drawable.drink, "Side Course"));
-        recipeItems.add(new RecipeItem(R.drawable.drink, "Vegetarian"));
-        recipeItems.add(new RecipeItem(R.drawable.drink, "Paleo"));
-        recipeItems.add(new RecipeItem(R.drawable.drink, "Gluten Free"));
-        recipeItems.add(new RecipeItem(R.drawable.drink, "Fasting Friendly"));
+        recipeItems.add(new RecipeItem(R.drawable.quickandeasy, "Quick & Easy"));
+        recipeItems.add(new RecipeItem(R.drawable.breakfast, "Breakfast and Brunch"));
+        recipeItems.add(new RecipeItem(R.drawable.lunch, "Lunch"));
+        recipeItems.add(new RecipeItem(R.drawable.maincourse, "Main Course"));
+        recipeItems.add(new RecipeItem(R.drawable.beverage, "Beverage"));
+        recipeItems.add(new RecipeItem(R.drawable.salad, "Salad"));
+        recipeItems.add(new RecipeItem(R.drawable.snack, "Snack"));
+        recipeItems.add(new RecipeItem(R.drawable.dessert, "Dessert"));
+        recipeItems.add(new RecipeItem(R.drawable.sidecourse, "Side Course"));
+        recipeItems.add(new RecipeItem(R.drawable.vegetarian, "Vegetarian"));
+        recipeItems.add(new RecipeItem(R.drawable.paleo, "Paleo"));
+        recipeItems.add(new RecipeItem(R.drawable.glutenfree, "Gluten Free"));
+        recipeItems.add(new RecipeItem(R.drawable.fastingfriendly, "Fasting Friendly"));
         // Set up the adapter for the RecyclerView
-        RecipesAdapter recipesAdapter = new RecipesAdapter(recipeItems);
+
+        // Set up the adapter for the RecyclerView with a click listener
+        RecipesAdapter   recipesAdapter = new RecipesAdapter(recipeItems, new RecipesAdapter.RecipeClickListener() {
+            @Override
+            public void onRecipeClicked(String category) {
+                // Handle the click event, navigate to ViewAllRecipesActivity with the selected category
+                Intent viewAllIntent = new Intent(HomeActivity.this, ViewAllRecipesActivity.class);
+                viewAllIntent.putExtra("category", category); // Pass the selected category
+                startActivity(viewAllIntent);
+            }
+        });
+
+
         recipesRecyclerView.setAdapter(recipesAdapter);
-
-
 
         // Initialize Retrofit service
         apiService = ApiClient.getClient().create(SpoonacularApiService.class);
 
-//TODO: remove comment when project is ready because it is just api calls
-        /*
+
+
         // RecipeCard RecyclerView1
         RecyclerView recipeCardsRecyclerView1 = findViewById(R.id.recipeCardsRecyclerView1);
         LinearLayoutManager cardLayoutManager1 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -113,7 +123,7 @@ public class HomeActivity extends BaseActivity {
         LinearLayoutManager cardLayoutManager3 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
         recipeCardsRecyclerView3.setLayoutManager(cardLayoutManager3);
-        fetchRecipesByIngredients(recipeCardsRecyclerView3 , "snack"); */
+        fetchRecipesByIngredients(recipeCardsRecyclerView3 , "snack");
 
 
 
@@ -128,21 +138,24 @@ public class HomeActivity extends BaseActivity {
 
 
             User user = userController.getUserByEmail(userEmail);
-            if(user.getPhotoData().length != 0)
+            if(user.getPhotoData() != null)
             {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(user.getPhotoData(), 0, user.getPhotoData().length);
-                binding.profileImageView.setImageBitmap(bitmap);
+                if(user.getPhotoData().length != 0) {
 
-                // If available, set the ImageView with the image
-               binding.profileImageView.setVisibility(View.VISIBLE);
-                binding.emailTextView.setVisibility(View.GONE);
 
-                binding.profileImageView.setOnClickListener(view -> {
-                    // Navigate to the SettingActivity and finish the current activity
-                    Intent settingIntent = new Intent(HomeActivity.this, SettingActivity.class);
-                    startActivity(settingIntent);
-                });
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(user.getPhotoData(), 0, user.getPhotoData().length);
+                    binding.profileImageView.setImageBitmap(bitmap);
 
+                    // If available, set the ImageView with the image
+                    binding.profileImageView.setVisibility(View.VISIBLE);
+                    binding.emailTextView.setVisibility(View.GONE);
+
+                    binding.profileImageView.setOnClickListener(view -> {
+                        // Navigate to the SettingActivity and finish the current activity
+                        Intent settingIntent = new Intent(HomeActivity.this, SettingActivity.class);
+                        startActivity(settingIntent);
+                    });
+                }
             }else
             {
                 String userInitial = extractInitial(userEmail);

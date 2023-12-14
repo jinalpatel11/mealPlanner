@@ -204,25 +204,24 @@ public class MyProfileActivity extends BaseActivity {
 
 
 
-    private void redirectToSetting() {
-        Intent settingIntent = new Intent(MyProfileActivity.this, SettingActivity.class);
-        startActivity(settingIntent);
-        finish();
-    }
 
     private void setupUserInfo() {
 
         String userEmail =getUserEmailFromSession();
 
         User user = userController.getUserByEmail(userEmail);
-        if(user.getPhotoData().length != 0)
+        if(user.getPhotoData() != null)
         {
-            Bitmap bitmap = BitmapFactory.decodeByteArray(user.getPhotoData(), 0, user.getPhotoData().length);
-            binding.profileImageView.setImageBitmap(bitmap);
 
-            // If available, set the ImageView with the image
-            binding.profileImageView.setVisibility(View.VISIBLE);
-            binding.emailTextView.setVisibility(View.GONE);
+            if(user.getPhotoData().length != 0 ){
+                Bitmap bitmap = BitmapFactory.decodeByteArray(user.getPhotoData(), 0, user.getPhotoData().length);
+                binding.profileImageView.setImageBitmap(bitmap);
+
+                // If available, set the ImageView with the image
+                binding.profileImageView.setVisibility(View.VISIBLE);
+                binding.emailTextView.setVisibility(View.GONE);
+
+            }
 
 
 
@@ -254,6 +253,9 @@ public class MyProfileActivity extends BaseActivity {
                         showUpdateDateDialog();
                     }else if(fieldTextViewId == R.id.activityLevelTextView){
                         showUpActivityLevelDialog();
+                    }else if(fieldTextViewId == R.id.emailTextView)
+                    {
+                        requestCameraPermission();
                     }
                     else {
                         showUpdateFieldDialog(fieldTextViewId);

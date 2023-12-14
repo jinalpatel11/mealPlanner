@@ -180,20 +180,25 @@ public class SettingActivity extends BaseActivity {
         String userEmail =getUserEmailFromSession();
 
         User user = userController.getUserByEmail(userEmail);
-        if(user.getPhotoData().length != 0)
+        if(user.getPhotoData() != null)
         {
-            Bitmap bitmap = BitmapFactory.decodeByteArray(user.getPhotoData(), 0, user.getPhotoData().length);
-            binding.profileImageView.setImageBitmap(bitmap);
+            if(user.getPhotoData().length != 0) {
 
-            // If available, set the ImageView with the image
-           binding.profileImageView.setVisibility(View.VISIBLE);
-            binding.emailTextView.setVisibility(View.GONE);
 
-            binding.profileImageView.setOnClickListener(view -> {
-                // Navigate to the SettingActivity and finish the current activity
-                Intent intent = new Intent(this, MyProfileActivity.class);
-                startActivity(intent);
-            });
+                Bitmap bitmap = BitmapFactory.decodeByteArray(user.getPhotoData(), 0, user.getPhotoData().length);
+                binding.profileImageView.setImageBitmap(bitmap);
+
+                // If available, set the ImageView with the image
+                binding.profileImageView.setVisibility(View.VISIBLE);
+                binding.emailTextView.setVisibility(View.GONE);
+
+                binding.profileImageView.setOnClickListener(view -> {
+                    // Navigate to the SettingActivity and finish the current activity
+                    Intent settingIntent = new Intent(this, MyProfileActivity.class);
+                    startActivity(settingIntent);
+                });
+            }
+
 
         }else
         {

@@ -75,8 +75,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/headerLayout"
-        android:layout_above="@+id/mealListButton">
+        android:layout_below="@id/headerLayout">
 
         <!-- Your Scrollable Content Goes Here -->
         <LinearLayout
@@ -165,16 +164,5 @@
 
     </ScrollView>
 
-    <!-- Footer -->
 
-
-    <Button
-        android:id="@+id/mealListButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="mealList"
-        android:layout_marginTop="16dp"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:layout_marginBottom="16dp"/>
 </RelativeLayout>

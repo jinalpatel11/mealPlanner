@@ -95,7 +95,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         if (userController.signIn(email, password)) {
             // Sign-in successful
             showToast("Sign-in successful");
-
+            saveUserEmailInSession(email);
             // Redirect to HomeActivity
             redirectToHome();
         } else {
