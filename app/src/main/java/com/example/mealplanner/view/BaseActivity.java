@@ -17,6 +17,7 @@ import com.example.mealplanner.controller.UserController;
 import com.example.mealplanner.databinding.ActivityHomeBinding;
 import com.example.mealplanner.repositories.UserRepository;
 import com.example.mealplanner.view.auth.LoginActivity;
+import com.example.mealplanner.view.home.AppHomeActivity;
 import com.example.mealplanner.view.home.HomeActivity;
 import com.example.mealplanner.view.home.SettingActivity;
 import com.example.mealplanner.view.setting.DeveloperDetailsActivity;
@@ -24,15 +25,23 @@ import com.example.mealplanner.view.setting.HelpSettingActivity;
 import com.example.mealplanner.view.setting.MyProfileActivity;
 import com.example.mealplanner.view.setting.PrivacyPolicyActivity;
 import com.example.mealplanner.view.setting.TermsServiceActivity;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity  implements GoogleApiClient.OnConnectionFailedListener {
 
 
     private static final String PREFS_NAME = "MyPrefsFile";
     private static final String USER_EMAIL_KEY = "user_email";
+
+    private GoogleApiClient googleApiClient;
+    private static final int RC_SIGN_IN = 9001;
 
     protected UserController userController; // Accessible in subclasses
 
@@ -207,5 +216,87 @@ public class BaseActivity extends AppCompatActivity {
 
 
 
+
+
+
+    protected void handleGoogleSignInResult(GoogleSignInResult result) {
+        //Check if the email is already register on app or not
+
+        if (result.isSuccess()) {
+            GoogleSignInAccount account = result.getSignInAccount();
+
+
+            String userEmail = account.getEmail();
+            // Save user email in SharedPreferences
+            saveUserEmailInSession(userEmail);
+            if(userController.checkUserEmailIdExist(userEmail))
+            {
+                // Now you can use 'account' to authenticate the user or extract user details
+                // For example, you can get the user's display name: account.getDisplayName()
+                // and email: account.getEmail()
+                Toast.makeText(this, "Google Sign-In successful", Toast.LENGTH_SHORT).show();
+
+                // Pass the email address to HomeActivity
+                Intent homeIntent = new Intent(this, HomeActivity.class);
+                homeIntent.putExtra("USER_EMAIL", userEmail);
+                startActivity(homeIntent);
+
+                finish(); // Optional: finish the LoginActivity to prevent going back
+            }else
+            {
+                //redirect to app home activity to get register user on app
+                // Pass the email address to HomeActivity
+                Intent homeIntent = new Intent(this, AppHomeActivity.class);
+                homeIntent.putExtra("USER_EMAIL", userEmail);
+                startActivity(homeIntent);
+
+                finish(); // Optional: finish the LoginActivity to prevent going back
+            }
+
+
+
+        } else {
+            Toast.makeText(this, "Google Sign-In failed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    protected void saveUserEmailInSession(String userEmail) {
+        SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit();
+        editor.putString(USER_EMAIL_KEY, userEmail);
+        editor.apply();
+    }
+
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Toast.makeText(this, "Google Sign-In connection failed", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleGoogleSignInResult(result);
+        }
+    }
+
+    protected void setupGoogleSignInLogin() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+    }
+
+
+    protected void signInWithGoogle() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
 }
 

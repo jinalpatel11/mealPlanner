@@ -19,6 +19,9 @@ import com.example.mealplanner.repositories.UserRepository;
 import com.example.mealplanner.view.BaseActivity;
 import com.example.mealplanner.view.home.ActivityBirthQuestion;
 import com.example.mealplanner.view.home.ActivityHeightQuestion;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,6 +32,7 @@ import java.util.Objects;
 public class RegistrationActivity extends BaseActivity {
 
     private ActivityRegistrationBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,13 +83,28 @@ public class RegistrationActivity extends BaseActivity {
             }
         });
 
+
+
+        setupGoogleSignInLogin();
+
+        binding.googleSignInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signInWithGoogle();
+            }
+        });
     }
+
+
 
     private void redirectToLogin() {
         Intent loginIntent = new Intent(RegistrationActivity.this, LoginActivity.class);
         startActivity(loginIntent);
         finish(); // Finish the RegistrationActivity to prevent going back
     }
+
+
+
 
     // Validate user input fields
     private boolean validateFields() {
