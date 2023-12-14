@@ -7,6 +7,7 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +40,10 @@ public class RegistrationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityRegistrationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
+        setSignInClickListener();
+
 
         // Set up UI components and event handlers
         binding.buttonRegister.setOnClickListener(new View.OnClickListener() {
@@ -150,5 +155,15 @@ public class RegistrationActivity extends BaseActivity {
         return password.matches(passwordPattern);
     }
 
+    private void setSignInClickListener() {
+        TextView txtSignIn = findViewById(R.id.txtSignIn);
+
+        txtSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectToLogin();
+            }
+        });
+    }
 }
 
