@@ -89,8 +89,9 @@
 
             <TextView
                 android:id="@+id/profilePhotoLabelTextView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Profile Photo"
                 android:textSize="16sp" />
 
@@ -105,8 +106,8 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:id="@+id/emailTextView"
-                    android:text="j"
-                    android:textAlignment="center"
+                    android:text="J"
+                    android:textAlignment="textEnd"
                     android:textColor="@color/white"
                     android:background="@drawable/rounded_button_background"/>
 
@@ -115,11 +116,12 @@
                     android:id="@+id/profileImageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"/> <!-- Initially set visibility to gone -->
+                    android:visibility="gone"
+                    android:layout_gravity="end"/> <!-- Set layout_gravity to end -->
 
             </FrameLayout>
-
         </LinearLayout>
+
 
         <!-- First Name -->
         <LinearLayout
